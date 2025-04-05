@@ -1,0 +1,342 @@
+// styling for introduction poem section
+.poem-scroll-container {
+  position: relative;
+  height: 150vh;
+  background: rgba(0, 0, 0, var(--scrim-opacity, 0));
+}
+.poem-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+.poem-lockup-container {
+  width: 100%;
+  text-align: center;
+}
+.poem-copy {
+  font-size: 2rem;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+  &.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+//styling for carousal section
+* {
+  box-sizing: border-box;
+}
+
+.section {
+  height: auto;
+  padding: 5vh 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  // margin-bottom: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+//styling for carousal
+
+.carousel {
+  position: relative;
+  min-width: 60vw;
+  min-height: 75vh;
+  perspective: 500px;
+  transform-style: preserve-3d;
+}
+
+.card-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 1, 7);
+  border: 0.5px solid transparent;
+  box-shadow: 0 0 4px rgba(104, 203, 237, 0.4);
+  border-radius: 12px;
+  transform: rotateY(calc(var(--offset) * 50deg))
+    scaleY(calc(1 + var(--abs-offset) * -0.4))
+    translateZ(calc(var(--abs-offset) * -30rem))
+    translateX(calc(var(--direction) * -5rem));
+  filter: blur(calc(var(--abs-offset) * 1rem))
+    brightness(calc(1 - var(--abs-offset) * 0.1));
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease,
+    filter 0.5s ease, background-color 0.5s ease;
+  will-change: transform, opacity;
+
+  // Active card effect
+  &[style*="--offset: 0"] {
+    background-color: rgba(0, 1, 7);
+    border: 0.5px solid transparent;
+    box-shadow: 0 0 4px rgba(104, 203, 237, 0.4);
+  }
+
+  &:hover {
+    border: 0.25px solid rgba(104, 203, 237, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 12px rgba(104, 203, 237, 0.6);
+    transform: translateY(-3px);
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+//styling for carousal content
+
+.post-card {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.tag {
+  padding-bottom: 1.2rem;
+  font-size: 1rem;
+  color: #7c8ea2;
+}
+.tagline {
+  padding: 3rem;
+  font-size: 1.25rem;
+  color: #abb7c4;
+  text-align: justify;
+}
+h3 {
+  font-size: 2rem;
+}
+.read-more {
+  color: #c3ccd5;
+  font-size: 1.1rem;
+  font-style: italic;
+  position: relative;
+  padding: 1.5rem;
+  padding-top: 0.7rem;
+  padding-left: 1.8rem;
+  border-radius: 35px;
+  img {
+    margin-left: 0.25rem;
+    height: 28px;
+    width: 28px;
+  }
+}
+
+//styling for carousal Controls
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: sticky;
+  transform: translateY(-50%); /* Centers it perfectly */
+  width: 100%;
+  justify-content: center;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.5s ease-out;
+  bottom: 0.25rem;
+  margin-top: 3rem;
+
+  backdrop-filter: blur(2px);
+
+  .carousel-dots {
+    display: flex;
+    gap: 8px;
+    border-radius: 35px;
+    width: 12rem;
+    padding: 1.25rem;
+    padding-right: 2rem;
+    .dot-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 20px;
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: rgba(195, 204, 213, 0.8);
+        transition: transform 0.3s ease;
+        pointer-events: auto;
+        z-index: 10;
+        &.active {
+          background-color: #c3ccd5;
+          transform: scale(1.1);
+          box-shadow: 0 0 8px 2px rgba(195, 204, 213, 0.8);
+        }
+      }
+
+      .progress-track {
+        position: absolute;
+        bottom: 0;
+        width: 1.75rem;
+        height: 10px;
+        left: 120%;
+        top: -1px;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0);
+        transition: opacity 0.1s ease;
+        border-radius: 10px;
+        overflow: hidden;
+
+        &.visible {
+          background-color: rgba(195, 204, 213, 0.6);
+        }
+        .progress-bar {
+          height: 100%;
+          background-color: #c3ccd5;
+          transition: width 0.1s linear, opacity 0.1s ease box-shadow 0.3s ease;
+          opacity: 0;
+          width: 0;
+
+          &.visible {
+            opacity: 0.9;
+            width: 100%;
+            box-shadow: 0 0 8px 2px rgba(195, 204, 213, 0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.play-pause-btn {
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+.carousel-controls.active {
+  opacity: 1;
+}
+.carousel-arrows {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 40%;
+  bottom: -5%;
+  transform: translateY(-50%);
+  z-index: 2;
+
+  cursor: pointer;
+}
+.arrow {
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  img {
+    height: 1.25rem;
+    width: 1.25rem;
+    padding-top: 0.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    min-width: min(90vw, 35rem);
+    min-height: min(80vh, 35rem);
+    height: auto;
+  }
+  .poem-copy {
+    font-size: 1.2rem;
+  }
+
+  .post-card {
+    padding: 2rem;
+  }
+  .tagline {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  .read-more {
+    font-size: 0.8rem;
+  }
+  .carousel-controls {
+    gap: 0;
+  }
+  .carousel-play-pause {
+    margin-left: 0;
+  }
+  .arrow {
+    margin-right: 8px;
+  }
+}
+@mixin hover-effect($button-class) {
+  #{$button-class}:hover > & {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;  // Smooth fade-in
+    transition-delay: 1s;  // Appear after 1.5s
+  }
+
+  #{$button-class}:not(:hover) > & {
+    opacity: 0;
+    transform: translateY(50%);
+    transition: opacity 0s, transform 0.3s ease;  // Instantly hide
+    transition-delay: 0s;  // No delay on disappearing
+  }
+}
+
+// Specific hover triggers
+.left-hover-text {
+  top: 125%;
+  left: -75%;
+  @include hover-effect(".left");
+}
+.pause-hover-text {
+  top: 125%;
+  left: -40%;
+  @include hover-effect(".pause-hover");
+}
+.play-hover-text {
+  top: 125%;
+  left: -20%;
+  @include hover-effect(".play-hover");
+}
+.right-hover-text {
+  top: 125%;
+  left: -70%;
+  @include hover-effect(".right");
+}
+.dot-hover-text {
+  top: 125%;
+  left: 15%;
+  @include hover-effect(".carousel-dots");
+}
+.blog-hover-text {
+  top: 110%;
+  left: 25%;
+  @include hover-effect(".read-more");
+}

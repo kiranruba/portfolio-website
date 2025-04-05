@@ -1,0 +1,76 @@
+<!-- introduction for blog section -->
+<div class="poem-scroll-container" [ngStyle]="{'--scrim-opacity': scrimOpacity}">
+  <div class="poem-sticky">
+    <div class="poem-lockup-container">
+      <div class="poem-lockup section-content">
+        <div *ngFor="let item of textBlocks; let i = index" class="copy poem-copy" [ngStyle]="getStyle(i)">
+          <p>{{ item }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- carousal of blog posts -->
+<div class="section">
+  <div class="carousel" #slideshow>
+    <!-- Carousel Cards -->
+    <div *ngFor="let post of posts; let i = index" class="card-container" [ngStyle]="{
+          '--active': i === active ? 1 : 0,
+          '--offset': (active - i) / maxVisibility,
+          '--direction': Math.sign(active - i),
+          '--abs-offset': Math.abs(active - i) / 3,
+          'pointer-events': active === i ? 'auto' : 'none',
+          'opacity': Math.abs(active - i) >= maxVisibility ? '0' : '1',
+          'display': Math.abs(active - i) > maxVisibility ? 'none' : 'block'
+        }">
+      <div class="post-card">
+        <h3>{{ post.title }}</h3>
+        <div class="tag">
+          {{post.tag}}
+        </div>
+        <button class="read-more controls-bg" (click)="openModal(post)">{{post.revealphrase}}
+          <img src="/icons/featherpen.png" alt="🔗">
+          <span class="blog-hover-text hover-text">Read Further</span>
+        </button>
+        <div class="tagline">
+          {{post.tagline}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Carousel Controls -->
+  <div class="carousel-controls" [class.active]="isControlActive">
+    <button class="arrow left controls-bg" (click)="scrollToIndex(active-1)">
+      <img src="/icons/left-arrow.svg" alt="Previous ⬅">
+      <span class="left-hover-text hover-text">Revisit the Tale</span>
+    </button>
+    <div class="carousel-dots controls-bg">
+      <div *ngFor="let item of posts; let i = index" class="dot-container">
+        <div class="dot" [class.active]="i === active" (click)="scrollToIndex(i)"></div>
+        <!-- Progress Bar (Visible Only for Active Dot) -->
+        <div class="progress-track" [ngClass]="{ 'visible': i === active }">
+          <div class="progress-bar" [ngClass]="{ 'visible': i === active }" [style.width.%]="i === active ? progressValue : 0"></div>
+        </div>
+      </div>
+      <span class="dot-hover-text hover-text">Navigate the Chapters</span>
+    </div>
+    <!-- Play/Pause Button -->
+    <div class="carousel-play-pause">
+      <button class="play-pause-btn controls-bg" (click)="togglePlayPause()" [class.paused]="!isPlaying">
+        <span *ngIf="isPlaying" class="icon pause-hover">
+          <img [src]="'/icons/pause.png'" class="icon" alt="⏸">
+          <span class="pause-hover-text hover-text">Hold here</span>
+        </span>
+        <span *ngIf="!isPlaying" class="icon play-hover">
+          <img [src]="'/icons/play.png'" class="icon" alt="⏵">
+          <span class="play-hover-text hover-text">Play it</span>
+        </span>
+      </button>
+    </div>
+    <button class="arrow right controls-bg" (click)="scrollToIndex(active+1)">
+      <img src="/icons/right-arrow.svg" alt="Next ➡">
+      <span class="right-hover-text hover-text">Turn the Page</span>
+    </button>
+  </div>
+  <app-dynamic-modal *ngIf="selectedPost" [modal_data]="selectedPost" (close)="closeModal()"></app-dynamic-modal>
+</div>

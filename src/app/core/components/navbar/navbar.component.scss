@@ -1,0 +1,231 @@
+.desktop-menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  filter: opacity(0.8);
+  padding: 1rem 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  transition: opacity 1s ease-in-out;
+  box-sizing: border-box;
+  &.fade-in {
+    opacity: 1;
+  }
+
+  ul {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+
+    a {
+      color: #c2d8ed;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        color: #68cbed;
+      }
+    }
+    img {
+      background: transparent;
+    }
+  }
+
+  .available-for-hire {
+    color: #d4fafe;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-right: 1rem;
+    .bulb {
+      width: 10px;
+      height: 10px;
+      background-color: #00ff41;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00ff41;
+      animation: blink 1.5s infinite alternate;
+    }
+  }
+
+  @keyframes blink {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.25;
+    }
+  }
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.collapsible-menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  .toggle-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    .available-for-hire {
+      color: #d4fafe;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-right: 1rem;
+      .bulb {
+        width: 10px;
+        height: 10px;
+        background-color: #00ff41;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #00ff41;
+        animation: blink 1.5s infinite alternate;
+      }
+    }
+  }
+  .menu-trigger {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(3, 19, 38, 0.4);
+    border: 0.1px solid rgba(104, 203, 237, 0.1);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      background: rgba(3, 19, 38, 0.5);
+      transform: scale(1.05);
+      border: 0.25px solid rgba(104, 203, 237, 0.2);
+      box-shadow: 0 12px 10px rgba(0, 0, 0, 0.4),
+        0 0 10px rgba(104, 203, 237, 0.6);
+    }
+
+    .bar {
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: #d4fafe;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+
+      &:nth-child(1) {
+        transform: translateY(-6px);
+      }
+      &:nth-child(2) {
+        opacity: 1;
+      }
+      &:nth-child(3) {
+        transform: translateY(6px);
+      }
+    }
+
+    &.active {
+      .bar:nth-child(1) {
+        transform: translateY(0) rotate(45deg);
+      }
+      .bar:nth-child(2) {
+        opacity: 0;
+      }
+      .bar:nth-child(3) {
+        transform: translateY(0) rotate(-45deg);
+      }
+    }
+
+    .bar {
+      width: 24px;
+      height: 3px;
+      background: #d4fafe;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+  }
+
+  .menu-content {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    background: rgba(0, 2, 12, 0.8);
+    backdrop-filter: blur(12px);
+
+    visibility: hidden;
+    opacity: 0;
+    transition: height 0.8s ease, opacity 0.4s ease;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      height: 100%;
+    }
+
+    .close {
+      position: relative;
+      border-radius: 50%;
+      padding: 1rem;
+      padding-bottom: 0.8rem;
+      background: rgba(3, 19, 38, 0.4);
+      border: 0.1px solid rgba(104, 203, 237, 0.1);
+      cursor: pointer;
+      transition: background 0.3s ease;
+      &:hover {
+        background: rgba(3, 19, 38, 0.5);
+        transform: scale(1.05);
+        border: 0.25px solid rgba(104, 203, 237, 0.2);
+        box-shadow: 0 12px 10px rgba(0, 0, 0, 0.4),
+          0 0 10px rgba(104, 203, 237, 0.6);
+      }
+      img {
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: anchor-center;
+
+      li {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+
+        &.reveal {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        a {
+          color: #d4fafe;
+          text-decoration: none;
+          display: block;
+          padding: 1rem 0;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #68cbed;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+}

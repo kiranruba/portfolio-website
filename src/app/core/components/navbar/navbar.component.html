@@ -1,0 +1,45 @@
+<!-- desktop navbar -->
+<nav class="desktop-menu" [class.hidden]="!isNavbarVisible" *ngIf="!isMobile">
+  <div class="logo">
+    <img src="/branding/logo.svg" alt="logo">
+  </div>
+  <ul>
+    <li *ngFor="let section of sectionIds">
+      <a (click)="scrollToSection(section)">{{ section | titlecase }}</a>
+    </li>
+  </ul>
+  <div class="available-for-hire">
+    <span class="bulb"></span> Available for Hire
+  </div>
+</nav>
+<!-- mobile navbar -->
+<nav class="collapsible-menu" *ngIf="isMobile">
+  <div class="toggle-header">
+    <div class="logo">
+      <img src="/branding/logo.svg" alt="KR">
+    </div>
+    <button class="menu-trigger" (click)="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+  <div class="menu-content" [class.active]="isMenuOpen">
+    <div class="toggle-header">
+      <div class="logo">
+        <img src="/branding/logo.svg" alt="KR">
+      </div>
+      <div class="available-for-hire">
+        <span class="bulb"></span> Available for Hire
+      </div>
+      <span class="close" (click)="toggleMenu()">
+        <img src="/icons/close.png" alt="close">
+      </span>
+    </div>
+    <ul>
+      <li *ngFor="let section of sectionIds; let i = index" [class.reveal]="isMenuOpen" [style.animationDelay]="i * 0.15 + 's'">
+        <a (click)="scrollToSection(section)">{{ section | titlecase }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,20 @@
+<section>
+  <div class="about-align">
+    <div class="gradient-layer" id="gradient1"></div>
+    <div class="gradient-layer" id="gradient2"></div>
+    <div class="gradient-layer" id="gradient3"></div>
+    <div class="image-container">
+      <h2> Hey!</h2>
+      <h2>Welcome to my space…</h2>
+      <img src="/branding/hero.png" [ngClass]="{ 'animate': isVisible }" class="pixelated-image" />
+    </div>
+    <div class="scrollsection" #scrollsections (window:scroll)="onScroll()">
+      <span *ngFor="let part of textParts; let i = index" [ngClass]="{
+            'highlight': highlightedIndices.includes(i),
+            'special-highlight': i === specialIndex
+          }">
+        {{ part }}
+      </span>
+    </div>
+  </div>
+</section>

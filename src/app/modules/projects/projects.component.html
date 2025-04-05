@@ -1,0 +1,44 @@
+<section>
+  <div class="card">
+    <h2>What’s in the box?</h2>
+    <p> I believe every project has added a new dimension to my personality, shaping and honing me as a person and as a developer. Here's a sneak peek into a few of those! </p>
+    <div class="project-container">
+      <div *ngFor="let project of projects" class="project-card" (click)="openModal(project)">
+        <div class="project-header">
+          <h3>{{ project.title }}</h3>
+          <div class="tagline">
+            {{project.tagline}}
+          </div>
+        </div>
+        <div class="tags">
+          <div *ngFor="let tag of project.tags">
+            {{tag}}
+          </div>
+          <button class="details-button">
+            <div class="cube-button">
+              <div class="face front"><span class="plus-sign">+</span></div>
+              <div class="face back"><span class="plus-sign">+</span></div>
+              <div class="face left"><span class="plus-sign">+</span></div>
+              <div class="face right"><span class="plus-sign">+</span></div>
+              <div class="face top"><span class="plus-sign">+</span></div>
+              <div class="face bottom"><span class="plus-sign">+</span></div>
+            </div>
+            <span class="pro-hover-text hover-text">Unbox Project</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-dynamic-modal *ngIf="selectedProject" [modal_data]="selectedProject" (close)="closeModal()"></app-dynamic-modal>
+  </div>
+  <button class="msg-button" (click)="openMailClient()" (mouseenter)="hoverMessage = true" (mouseleave)="hoverMessage = false">
+    <div class="cube-button">
+      <div class="face front"><span class="plus-sign">+</span></div>
+      <div class="face back"><span class="plus-sign">+</span></div>
+      <div class="face left"><span class="plus-sign">+</span></div>
+      <div class="face right"><span class="plus-sign">+</span></div>
+      <div class="face top"><span class="plus-sign">+</span></div>
+      <div class="face bottom"><span class="plus-sign">+</span></div>
+    </div>
+    <span class="hover-text" [class.visible]="hoverMessage">Drop a Message!</span>
+  </button>
+</section>

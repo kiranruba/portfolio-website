@@ -1,0 +1,7 @@
+<div class="content-item">
+  <div class="content-description" [ngClass]="{ 'left-align': index % 2 === 0, 'right-align': index % 2 !== 0 }">
+    <h2>{{ content?.skill_title }}</h2>
+    <p>{{ content?.skill_details }}</p>
+  </div>
+  <canvas *ngIf="content.section" [ngClass]="{ 'left-align': index % 2 !== 0, 'right-align': index % 2 === 0 }" class="particles-container" #containerCanvas></canvas>
+</div>

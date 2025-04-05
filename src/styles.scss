@@ -1,1 +1,142 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Federo&display=swap");
+
+.federo-regular {
+  font-family: "Federo", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  overflow-x: clip;
+  min-height: 100%;
+  min-width: 100%;
+  background-color: #00020d;
+  color: #c2d8ed;
+  font-family: "Federo", serif;
+  scroll-behavior: smooth;
+}
+app-navbar {
+  z-index: 9999;
+}
+.text-gradient {
+  background: linear-gradient(180deg, #a1c5f1 30%, #c3ccd5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-shadow: 0 0 1px rgba(212, 250, 254, 0.1), 0 0 2px rgba(96, 160, 190, 0.1);
+}
+
+h2 {
+  @extend .text-gradient;
+  font-size: 3rem;
+  font-weight: bolder;
+  @media (max-width: 768px) {
+  font-size: 2rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
+}
+
+h3 {
+  @extend .text-gradient;
+  font-size: 1.75rem;
+  font-weight: bold;
+  @media (max-width: 768px) {
+  font-size: 1.25rem;
+  }
+  @media (max-width: 480px) {
+  font-size: 1rem;
+  }
+}
+.no-scroll {
+  overflow-y: hidden; /* Prevents scroll */
+  touch-action: none; /* Disables touch scroll on mobile */
+}
+html.no-scroll {
+  nav.desktop-menu {
+    visibility: hidden;
+  }
+  nav.collapsible-menu {
+    visibility: hidden;
+  }
+}
+
+/* Scrollbar container */
+::-webkit-scrollbar {
+  cursor: grab;
+  pointer-events: pointer;
+  width: 0.35rem;
+  height: 0.3rem;
+}
+
+/* Scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #48525e;
+  border-radius: 15px;
+}
+
+/* Scrollbar thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #abb7c4;
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background: rgba(0, 2, 12, 0.3);
+  border-radius: 15px;
+}
+
+/* Scrollbar track hover */
+::-webkit-scrollbar-track:hover {
+  background: rgba(0, 2, 12, 0.6);
+  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(104, 203, 237, 0.6);
+}
+
+.hover-text {
+  position: absolute;
+  background-color: #010914 !important;
+  color: #abb7c4 !important;
+  padding: 0.6rem 0.8rem;
+  border-radius: 1.25rem;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: translateY(20%);
+  transition: opacity 2s, transform 0.3s;
+  top: 125%;
+  left: -50%;
+}
+.hover-button {
+  position: relative;
+  display: inline-block;
+}
+.hover-text::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #010914 transparent;
+}
+.controls-bg {
+  background: rgba(3, 19, 38, 0.4);
+  border: none;
+  border: 0.1px solid rgba(104, 203, 237, 0.1);
+  cursor: pointer;
+  transition: background 0.3s ease;
+  &:hover {
+    background: rgba(3, 19, 38, 0.5);
+    transform: scale(1.05);
+    border: 0.25px solid rgba(104, 203, 237, 0.2);
+    box-shadow: 0 12px 10px rgba(0, 0, 0, 0.4),
+      0 0 10px rgba(104, 203, 237, 0.6);
+  }
+}

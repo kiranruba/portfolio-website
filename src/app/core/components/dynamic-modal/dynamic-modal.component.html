@@ -1,0 +1,141 @@
+<!-- Modal -->
+<div
+  class="modal"
+  *ngIf="modal_data || isClosing"
+  id="dynamic-modal"
+  [class.active]="isModalOpen"
+  [class.closing]="isClosing"
+>
+  <div class="modal-content-wrapper">
+    <div class="modal-content">
+      <!-- Title Section -->
+      <div class="title">
+        <h2>{{ modal_data.title }}</h2>
+      </div>
+      <div class="tag" *ngIf="modal_data.tag">
+        {{ modal_data.tag }}
+      </div>
+      <div [ngClass]="{ 'tagline': !modal_data.revealphrase, 'poem-tagline': modal_data.revealphrase }">
+        {{ modal_data.tagline }}
+      </div>
+
+      <!-- Particle Canvas -->
+      <canvas
+        *ngIf="modal_data.section"
+        class="particles-container"
+        #containerCanvas>
+      </canvas>
+
+      <!-- Content Container -->
+      <div class="content-container">
+        <div class="content" *ngFor="let content of modal_data.content">
+
+          <!-- Section Headers -->
+          <div class="content-header" *ngIf="content.type === 'header'">
+            <h3>{{ content.data }}</h3>
+          </div>
+
+          <!-- Tech Stack Section -->
+          <ng-container *ngIf="content.type === 'tech_stack'">
+            <div *ngFor="let tech_stack of content.data" class="tech_stack">
+              <img [src]="'/icons/' + tech_stack.icon + '.svg'" alt="⚙️" class="icon">
+              <span class="tech_name">{{ tech_stack.name }}</span>
+              <div class="tech_list">
+                <div *ngFor="let list of tech_stack.list" class="list_item">
+                  {{ list }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Paragraph Sections -->
+          <div class="content-para" *ngIf="content.type === 'para' || content.type === 'para-i'">
+            <p [innerHTML]="highlightText(content.data, content.highlight)"></p>
+          </div>
+
+          <!-- List Bar -->
+          <div class="list-bar" *ngIf="content.type === 'list-bar'">
+            <div *ngFor="let list of content.data" class="list-bar-items">
+              {{ list }}
+            </div>
+          </div>
+
+          <!-- Quote Box -->
+          <div class="quote-box" *ngIf="content.type === 'quote'">
+            <div class="quote-author">{{ content.tagline }}</div>
+            <span class="quote-mark left">❝</span>
+            <p class="quote-text">{{ content.data }}</p>
+            <span class="quote-mark right">❞</span>
+          </div>
+
+          <!-- Feature Cards -->
+          <div class="feature-container" *ngIf="content.type === 'features'">
+            <div class="feature-card" *ngFor="let feature of content.data">
+              <img [src]="'/icons/' + feature.icon + '.svg'" alt="⭐" class="feature-icon">
+              <h3 class="feature-title">{{ feature.title }}</h3>
+              <p class="feature-desc">{{ feature.description }}</p>
+            </div>
+          </div>
+
+          <!-- Infographic Drill -->
+          <div class="infographic-container" *ngIf="content.type === 'drill'">
+            <div class="infographic-step" *ngFor="let step of content.data; let i = index">
+              <div class="step-content">
+                <p>{{ step }}</p>
+              </div>
+              <div class="arrow" *ngIf="i < content.data.length - 1"></div>
+            </div>
+          </div>
+
+          <!-- Paragraph with Image -->
+          <div class="paraimg-container" *ngIf="content.type === 'paraimg'">
+            <p class="paraimg-desc">{{ content.data.description }}</p>
+            <img [src]="'/icons/' + content.data.icon + '.svg'" alt="🖥️" class="paraimg-icon">
+          </div>
+
+          <!-- Lists -->
+          <div
+            [ngClass]="{ 'list-bar': !modal_data.revealphrase, 'poem-list-bar': modal_data.revealphrase }"
+            *ngIf="content.type === 'list'"
+          >
+            <div
+              *ngFor="let list of content.data"
+              [ngClass]="{ 'list-items': !modal_data.revealphrase, 'poem-list': modal_data.revealphrase }"
+            >
+              {{ list }}
+            </div>
+          </div>
+
+          <!-- Images -->
+          <div class="img-right" *ngIf="content.type === 'img-right'">
+            <img [src]="'/icons/' + content.icon + '.svg'" alt="🖥️" class="icon">
+          </div>
+          <div class="img-divider" *ngIf="content.type === 'img-divider'">
+            <img [src]="'/icons/' + content.icon + '.svg'" alt=****************************** class="divider">
+          </div>
+
+        </div> <!-- End of .content -->
+
+      </div> <!-- End of .content-container -->
+
+      <!-- Poem Signature -->
+      <div class="poem-sign" *ngIf="modal_data.revealphrase">
+        <p>—{{ modal_data.revealphrase }}</p>
+        <div class="img-sign">
+          <img src="/branding/sign.svg" class="sign" alt="Kiran Ruba">
+          <img src="/icons/featherpen.png" class="pen" alt="M">
+        </div>
+      </div>
+
+    </div> <!-- End of .modal-content -->
+
+    <!-- Close Button -->
+    <div class="close-container">
+      <span class="close controls-bg" (click)="closeModal()">
+        <img src="/icons/close.png" alt="✖️">
+        <span class="close-hover-text hover-text">Close</span>
+      </span>
+    </div>
+
+  </div> <!-- End of .modal-content-wrapper -->
+</div> <!-- End of .modal -->

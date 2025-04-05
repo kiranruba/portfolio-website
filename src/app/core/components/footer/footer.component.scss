@@ -1,0 +1,270 @@
+.mail-id {
+  padding-left: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #a6c7e9;
+}
+.footer {
+  width: 100vw;
+  position: relative;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem 2rem 15%;
+}
+.footer {
+  h2,
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-weight: lighter;
+    font-size: 1.5rem;
+  }
+  &__contact,
+  &__social {
+    margin: 1rem 0;
+  }
+
+  &__credits {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    align-items: center;
+    font-size: 1rem;
+    color: #48525e;
+    z-index: 999;
+
+    p {
+      display: flex;
+      align-items: center;
+      margin: 0;
+    }
+  }
+}
+
+button {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+img.heart {
+  padding-left: 0.6rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  padding-right: 0.2rem;
+}
+img.pen {
+  height: 1.2rem;
+  width: 1rem;
+  padding-left: 0.1rem;
+}
+img.sign {
+  padding-left: 0.2rem;
+  padding-bottom: 0.3rem;
+  height: 2rem;
+  width: 4rem;
+}
+img.world {
+  height: 13rem;
+  position: absolute;
+  right: 30%;
+  bottom: 20%;
+}
+.footer-desc {
+  color: #7c8ea2;
+  font-size: 1.25rem;
+  display: flex;
+  line-height: 0.5rem;
+  flex-direction: column;
+  img {
+    padding-left: 0.8rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  p {
+    display: flex;
+    align-items: center;
+  }
+}
+.footer-icon {
+  width: 4rem; /* Adjust size as needed */
+  height: 4rem;
+}
+span#email {
+  display: flex;
+  padding: 1rem;
+}
+
+.img-icon-desc {
+  display: flex;
+  color: #abb7c4;
+  align-items: center;
+}
+.custom-shape-divider-bottom {
+  position: absolute;
+  bottom: -5%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 100px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom .shape-fill {
+  fill: #010914;
+}
+.tooltip {
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #010914;
+    color: #a7c8e9;
+    padding: 0.6rem 0.8rem;
+    border-radius: 1.25rem;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 1px rgba(104, 203, 237, 0.3);
+    top: 150%;
+    left: -100%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 5;
+  }
+
+  &:hover::after {
+    opacity: 0.7;
+    visibility: visible;
+  }
+}
+
+#custom-alert {
+  visibility: hidden;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+button.mail-id.tooltip {
+    font-size: 1.2rem;
+}
+/** For tablet devices **/
+@media (min-width: 768px) and (max-width: 1023px) {
+  .custom-shape-divider-bottom svg {
+    width: calc(196% + 1.3px);
+    height: 75px;
+  }
+  .footer {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+/** For mobile devices **/
+@media (max-width: 767px) {
+  .custom-shape-divider-bottom svg {
+    width: calc(237% + 1.3px);
+    height: 50px;
+  }
+  .footer {
+    padding: 1.5rem;
+    padding-bottom: 40%;
+    h3 {
+      font-size: 1.25rem;
+    }
+  }
+  img.world {
+    height: 8rem;
+    right: 15%;
+    bottom: 5%;
+  }
+  .footer__credits {
+    p {
+      font-size: 0.7rem;
+    }
+
+    align-items: flex-start;
+  }
+  img.heart {
+    padding: 0;
+    width: 1rem;
+    height: 1rem;
+  }
+  .footer-desc {
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+
+  img.sign {
+    height: 1rem;
+    width: 2rem;
+    padding: 0;
+    padding-left: 0.1rem;
+  }
+  img.pen {
+    height: 1rem;
+    width: 0.8rem;
+  }
+}
+
+// Mixin for hover effect
+@mixin hover-effect($button-class) {
+  #{$button-class}:hover > & {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;  // Smooth fade-in
+    transition-delay: 1s;  // Appear after 1.5s
+  }
+
+  #{$button-class}:not(:hover) > & {
+    opacity: 0;
+    transform: translateY(50%);
+    transition: opacity 0s, transform 0.3s ease;  // Instantly hide
+    transition-delay: 0s;  // No delay on disappearing
+  }
+}
+
+
+.mail-hover-text,
+#custom-alert {
+  top: 150%;
+  left: 50%;
+}
+// Specific hover triggers
+.resume-hover-text {
+  @include hover-effect(".resume-button");
+}
+.wp-hover-text {
+  @include hover-effect(".wp-button");
+}
+.lin-hover-text {
+  @include hover-effect(".lin-button");
+}
+.gh-hover-text {
+  @include hover-effect(".gh-button");
+}
+.mail-hover-text {
+  @include hover-effect(".mail-id");
+}
+#custom-alert {
+  @include hover-effect(".mail-id");
+}

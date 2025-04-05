@@ -1,0 +1,162 @@
+section {
+  height: 100vh;
+  width: 100vw;
+}
+
+//particles animation
+.particles-scatter {
+  position: fixed !important;
+  inset: 0;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.particles-container {
+  position: absolute;
+  top: 12vh;
+  left: 30vw;
+  background: transparent;
+  width: 70vw !important;
+  height: 80vh !important;
+}
+.hero-content {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1.5rem;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  opacity: 0;
+  will-change: transform, opacity;
+  z-index: 1;
+  p {
+    margin: 0;
+  }
+}
+
+div#signature-container {
+  justify-content: center;
+  display: flex;
+  width: 88%;
+  svg {
+    will-change: transform, opacity;
+  }
+}
+
+.tagline {
+  font-size: 1rem;
+  color: #a7c8e9;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  gap: 1rem;
+  line-height: 1em;
+  padding: 0.5rem 1.6vw;
+  opacity: 0;
+  animation: backgroundReveal 1s ease-out 2.5s forwards;
+
+  span {
+    display: contents;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out 3s forwards;
+    position: relative;
+  }
+
+  // Decorative Lines ONLY for the 2nd <span>
+  span:nth-child(2)::before,
+  span:nth-child(2)::after {
+    content: "";
+    display: inline-block;
+    width: 0.1vmax;
+    height: 1.25rem;
+    background-color: #7c8ea2;
+    margin: 0 0.5rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+@keyframes backgroundReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .tagline {
+    margin-top: -1rem;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #00020d 5%,
+      #00020d 25%,
+      transparent
+    );
+  }
+  .particles-container {
+    position: absolute;
+    top: 30vh;
+    left: 0%;
+  }
+  div#signature-container {
+    width: 100%;
+  }
+  .hero-content {
+    height: 80%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) and (max-aspect-ratio: 1/1) and (orientation: portrait) {
+  /* styles for when height is more than width */
+  .particles-container {
+    top: 20vh;
+    left: 0%;
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+  div#signature-container {
+    width: 100%;
+  }
+  .hero-content {
+    top: 20%;
+    height: 90%;
+    justify-content: normal;
+  }
+}
+
+@media (max-width: 1200px) {
+  .particles-container {
+    top: 18vh;
+    left: 35vw;
+    width: 65vw !important;
+    height: 70vh !important;
+  }
+}
+@media (orientation: portrait) {
+  /* Styles for taller-than-wide screens */
+  .particles-container {
+    top: 35vh;
+  }
+}

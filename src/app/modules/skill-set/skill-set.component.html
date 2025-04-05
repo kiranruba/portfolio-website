@@ -1,0 +1,21 @@
+<div class="section" id="box-out-section">
+  <div class="box-heading">
+    <h2>So, What’s in the box?</h2>
+  </div>
+  <div class="box-content">
+    <div class="poem">
+      <p class="box-text" *ngFor="let text of textParts">
+        {{ text }}
+      </p>
+      <p class="para-i">So, What’s Out of The Box?</p>
+    </div>
+    <canvas class="particles-container" #containerCanvas></canvas>
+  </div>
+</div>
+<div class="carousel-scroll-container" [ngStyle]="{'--scrim-opacity': scrimOpacity}">
+  <div class="carousel-sticky">
+    <div class="carousel-lockup section-content">
+      <app-carousel-content *ngFor="let item of carouselItems; let i = index" class="copy carousel-copy" [content]="item" [index]="i" [ngStyle]="getStyle(i)"></app-carousel-content>
+    </div>
+  </div>
+</div>

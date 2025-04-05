@@ -1,0 +1,144 @@
+section {
+  height: 100%;
+  width: 95%;
+  z-index: 15;
+  box-sizing: border-box;
+}
+.pixelated-image {
+  width: 12rem;
+  z-index: -1;
+  border-radius: 50%;
+  padding: 0.25rem;
+  border: 3px solid #a7c8e9;
+  box-shadow: 0 0 15px rgbargba(167, 200, 233, 0.8);
+  filter: blur(10px) contrast(0.8);
+  transition: filter 0.5s ease-in-out;
+}
+
+// When the section is visible, this class is added dynamically
+.pixelated-image.animate {
+  filter: blur(0px) contrast(1);
+}
+.about-align {
+  display: flex;
+  position: relative;
+}
+.image-container {
+  padding-top: 15%;
+  padding-left: 12vw;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.scrollsection {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80vw;
+  font-size: 2rem;
+  margin-bottom: 10vh;
+  line-height: 1.6;
+  padding: 10vw;
+  padding-top: 20vh;
+  opacity: 0;
+  animation: fadeInDiv 2s ease-in-out 2.5s forwards;
+}
+
+@keyframes fadeInDiv {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+span {
+  opacity: 0.2;
+}
+
+.highlight {
+  color: #c2d8ed;
+  opacity: 0.9;
+  transition: opacity 1.2s ease-in-out, color 0.5s ease-in-out;
+}
+
+.gradient-layer {
+  position: absolute;
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: clip;
+  height: 85%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 2, 13, 0.8),
+    rgba(3, 19, 38, 0.5),
+    rgba(0, 11, 61, 0.1),
+    rgba(56, 234, 250, 0.1)
+  );
+  transform-origin: center;
+  transform: scale(0.5);
+  opacity: 0.5;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+.special-highlight {
+  color: #36bbe7;
+  animation: pulse-glow 1.5s infinite alternate;
+  font-style: italic;
+}
+
+@keyframes pulse-glow {
+  from {
+    text-shadow: 0 0 3px #a3b8bb, 0 0 6px #36bbe7;
+    color: #c1dbeb;
+  }
+  to {
+    text-shadow: 0 0 1px #36bbe7, 0 0 2px #a3b8bb;
+    color: #38eafa;
+  }
+}
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+    padding: 5vh 5vw;
+  }
+
+  .pixelated-image {
+    width: 35vw;
+    filter: blur(6px) contrast(0.9);
+  }
+
+  .scrollsection {
+    font-size: 1.2rem;
+    padding: 15vw;
+  }
+
+  .image-container {
+    padding-top: 5vh;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .gradient-layer {
+    position: relative;
+  }
+}
+@media (max-width: 1200px) {
+  .gradient-layer {
+    position: relative;
+  }
+  .about-align {
+    flex-direction: column;
+  }
+  .image-container {
+    padding-top: 5vh;
+    padding-left: 0;
+    text-align: center;
+  }
+}
+@media (orientation: portrait) {
+  .scrollsection {
+    padding-top: 8vh;
+  }
+}
