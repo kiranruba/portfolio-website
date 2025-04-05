@@ -87,7 +87,7 @@ export class ParticlesScatterService {
       },
       undefined,
      (error) => {
-       console.warn("Texture load failed, using fallback particle style.", error);
+       // console.warn("Texture load failed, using fallback particle style.", error);
        this.setupParticles(); // fallback without texture
        resolve();
      }
