@@ -85,11 +85,9 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   private initializeServices(): void {
   if (!this.containerCanvasRef?.nativeElement || !this.scatterCanvasRef?.nativeElement) {
     if (this.retryCount < this.maxRetries) {
-      console.warn(`Canvas refs not ready. Retrying (${this.retryCount + 1}/${this.maxRetries})...`);
       this.retryCount++;
       setTimeout(() => this.initializeServices(), this.retryDelay);
     } else {
-      console.error("Canvas elements not found after max retries!");
     }
     return;
   }
@@ -120,7 +118,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
           container.innerHTML = svgContent;
           const path = this.el.nativeElement.querySelector(".signature-path");
           if (!path) {
-            console.error("Signature path not found!");
+            // console.error("Signature path not found!");
             return;
           }
 

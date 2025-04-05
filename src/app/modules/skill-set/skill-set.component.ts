@@ -110,11 +110,9 @@ export class SkillSetComponent implements OnInit, AfterViewInit {
   private initializeCanvasAndParticles(): void {
   if (!this.containerCanvasRef?.nativeElement) {
     if (this.retryCount < this.maxRetries) {
-      console.warn(`Canvas ref not ready. Retrying (${this.retryCount + 1}/${this.maxRetries})...`);
       this.retryCount++;
       setTimeout(() => this.initializeCanvasAndParticles(), this.retryDelay);
     } else {
-      console.error("Canvas element not found after max retries.");
     }
     return;
   }

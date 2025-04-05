@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import * as THREE from "three";
 import { FetchDataService } from "../fetch-data/fetch-data.service";
 import { MorphEffectService } from "../morph-effect/morph-effect.service";
+import { of, throwError } from 'rxjs';
+import { switchMap, retryWhen, delay, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: "root",
@@ -59,16 +61,39 @@ export class ParticlesContainerService {
   }
   /** Fetch and store particles for a given section */
   loadParticles(section: string): void {
-    this.dataService.loadAllParticlesForSection(section).subscribe((data) => {
-      this.allModelVertices = data.map((particleArray) =>
-        particleArray.map(
-          (particle) => new THREE.Vector3(particle.x, particle.y, particle.z)
+    this.dataService.loadAllParticlesForSection(section).pipe(
+      // Retry on error
+      retryWhen(errors =>
+        errors.pipe(
+          tap(err => console.warn("Error loading particles, retrying...", err)),
+          delay(1000)
         )
-      );
-      this.modelPosition = this.dataService.fetchModelPosition(section); //set position and angle of models
-      this.createModels();
+      ),
+      // Check if data is empty, and retry if so
+      switchMap((data) => {
+        if (!data || data.length === 0 || data.every(arr => arr.length === 0)) {
+          console.warn("Empty particle data, retrying...");
+          // Throw to trigger retryWhen
+          return throwError(() => new Error("Empty particle data"));
+        }
+        return of(data);
+      })
+    ).subscribe({
+      next: (data) => {
+        this.allModelVertices = data.map((particleArray) =>
+          particleArray.map(
+            (particle) => new THREE.Vector3(particle.x, particle.y, particle.z)
+          )
+        );
+        this.modelPosition = this.dataService.fetchModelPosition(section);
+        this.createModels();
+      },
+      error: (err) => {
+        console.error("Failed to load particles after retries:", err);
+      }
     });
   }
+
   // Load Models Sequentially and Extract Vertices
   private createModels() {
     if (this.particles) {

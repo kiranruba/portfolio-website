@@ -68,12 +68,7 @@ img.sign {
   height: 2rem;
   width: 4rem;
 }
-img.world {
-  height: 13rem;
-  position: absolute;
-  right: 30%;
-  bottom: 20%;
-}
+
 .footer-desc {
   color: #7c8ea2;
   font-size: 1.25rem;
@@ -180,13 +175,14 @@ button.mail-id.tooltip {
 }
 
 /** For mobile devices **/
-@media (max-width: 767px) {
+@media (max-width: 767px)and (orientation: portrait) {
   .custom-shape-divider-bottom svg {
     width: calc(237% + 1.3px);
     height: 50px;
   }
   .footer {
     padding: 1.5rem;
+    width: 90vw;
     padding-bottom: 40%;
     h3 {
       font-size: 1.25rem;

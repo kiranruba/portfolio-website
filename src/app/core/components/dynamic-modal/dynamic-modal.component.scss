@@ -439,6 +439,10 @@ span.tech_name {
   }
 }
 @media (max-width: 768px) and (orientation: portrait) {
+  .paraimg-container {
+    flex-direction: column-reverse;
+  
+}
   .content-container {
     padding-left: 3rem;
     padding-right: 2rem;
@@ -485,7 +489,7 @@ span.tech_name {
   }
 
   .close-container {
-    top:80vh;
+    top:85vh;
   }
 
   .poem-list {
