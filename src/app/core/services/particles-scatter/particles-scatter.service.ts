@@ -45,10 +45,7 @@ export class ParticlesScatterService {
       const textureLoader = new THREE.TextureLoader();
 
       textureLoader.load(texturePath, (texture) => {
-     // 
-     //    texture.anisotropy =this.renderer.capabilities.getMaxAnisotropy();
-     // texture.generateMipmaps = true;
-     // texture.minFilter = THREE.LinearMipmapLinearFilter;
+
         this.particleGeometry = new THREE.BufferGeometry();
         const positions = new Float32Array(this.particleCount * 3);
         const opacityArray = new Float32Array(this.particleCount);
@@ -87,7 +84,14 @@ export class ParticlesScatterService {
         this.scene.add(this.particles);
 
         resolve(); // Resolve the promise after particles are fully created
-      });
+      },
+      undefined,
+     (error) => {
+       console.warn("Texture load failed, using fallback particle style.", error);
+       this.setupParticles(); // fallback without texture
+       resolve();
+     }
+    );
 
     });
   }
@@ -103,6 +107,44 @@ export class ParticlesScatterService {
   setSparklingEffect(intensity: number, frequency: number) {
     this.sparkleIntensity = intensity;
     this.sparkleFrequency = frequency;
+  }
+  private setupParticles(texture?: THREE.Texture) {
+    this.particleGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(this.particleCount * 3);
+    const opacityArray = new Float32Array(this.particleCount);
+
+    const boundary = 5;
+    for (let i = 0; i < this.particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * boundary * 2;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * boundary * 2;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * boundary * 2;
+      opacityArray[i] = Math.random();
+    }
+
+    this.particleGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
+    this.particleGeometry.setAttribute(
+      "alpha",
+      new THREE.BufferAttribute(opacityArray, 1)
+    );
+
+    this.particleMaterial = new THREE.PointsMaterial({
+      size: 0.035,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending,
+      depthTest: false,
+      map: texture || undefined,
+      color: new THREE.Color(0xa7c8e9),
+    });
+
+    this.particles = new THREE.Points(
+      this.particleGeometry,
+      this.particleMaterial
+    );
+    this.scene.add(this.particles);
   }
 
   private onResize() {

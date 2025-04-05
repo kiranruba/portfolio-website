@@ -284,13 +284,15 @@ h3 {
     font-size: 0.8rem;
   }
   .carousel-controls {
-    gap: 0;
+    gap: 0.25rem;
   }
   .carousel-play-pause {
     margin-left: 0;
   }
   .arrow {
-    margin-right: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
   }
 }
 @mixin hover-effect($button-class) {

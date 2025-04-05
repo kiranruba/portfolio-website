@@ -139,10 +139,17 @@ export class ParticlesContainerService {
     );
 
     //fetch texture
-    const texture = new THREE.TextureLoader().load("texture/bright_64.webp");
-//     texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
-// texture.generateMipmaps = true;
-// texture.minFilter = THREE.LinearMipmapLinearFilter;
+    const texture = new THREE.TextureLoader().load(
+      "texture/bright_64.webp",
+      (texture) => {
+        this.createPointsMaterial(texture);
+      },
+      undefined,
+      (err) => {
+        console.warn("Failed to load texture, falling back to no texture.", err);
+        this.createPointsMaterial(); // Fallback
+      }
+    );
 
     //define material
     const material = new THREE.PointsMaterial({
@@ -255,6 +262,32 @@ export class ParticlesContainerService {
       this.particles.material.dispose();
     }
     this.scene.remove(this.particles);
+  }
+  private createPointsMaterial(texture?: THREE.Texture) {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(this.particlePositions, 3)
+    );
+    geometry.setAttribute(
+      "color",
+      new THREE.BufferAttribute(this.particleColors, 3)
+    );
+
+    const material = new THREE.PointsMaterial({
+      vertexColors: true,
+      size: 0.013,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+      depthTest: false,
+      map: texture ?? undefined,
+    });
+
+    this.particles = new THREE.Points(geometry, material);
+    this.scene.add(this.particles);
+    this.adjustCameraView();
+    this.renderer.render(this.scene, this.camera);
   }
 
   resizeRenderer(): void {

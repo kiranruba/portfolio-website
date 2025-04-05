@@ -10,7 +10,7 @@ import { Component } from "@angular/core";
 export class FooterComponent {
   email: string = "kiranrubamuraliraj@yahoo.com";
   resumeLink: string = "https://drive.google.com/file/d/1cowkS4RewTfkbNANtALSox1vJ_6uSv7R/view?usp=sharing";
-  linkedinLink: string = "www.linkedin.com/in/kiran-ruba-a137696b";
+  linkedinLink: string = "https://www.linkedin.com/in/kiran-ruba/";
   wordpressLink: string = "https://chiselmee.wordpress.com/";
   githubLink: string = "https://github.com/kiranruba";
 

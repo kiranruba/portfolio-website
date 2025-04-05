@@ -441,7 +441,7 @@ span.tech_name {
 @media (max-width: 768px) and (orientation: portrait) {
   .paraimg-container {
     flex-direction: column-reverse;
-  
+
 }
   .content-container {
     padding-left: 3rem;
@@ -499,6 +499,7 @@ span.tech_name {
     align-items: flex-start;
     width: auto;
     justify-self: right;
+    padding: 0;
   }
   .img-right {
     position: relative;
