@@ -1,4 +1,4 @@
-$primary-bg: rgba(3, 19, 38, 0.1);
+$primary-bg: rgba(3, 19, 38, 0.2);
 $border-glow: rgba(104, 203, 237, 0.2);
 $text-light: #abb7c4;
 $box-shadow-default: 0 12px 10px rgba(0, 0, 0, 0.4),
@@ -456,6 +456,7 @@ span.tech_name {
     padding-right: 1.5rem;
   }
   h3 {
+    font-size: 1.5rem;
     padding-top: 2rem;
   }
   .infographic-container {
@@ -466,10 +467,10 @@ span.tech_name {
   }
   .infographic-step {
     flex-direction: column;
-
     min-height: 5rem;
     min-width: 1rem;
     padding-left: 3px;
+    align-self: self-end;
   }
   .step-content {
     margin: 0px;
@@ -484,7 +485,7 @@ span.tech_name {
   }
 
   .close-container {
-    height: 12%;
+    top:80vh;
   }
 
   .poem-list {
@@ -511,5 +512,8 @@ span.tech_name {
   }
   .list-bar {
     padding-left: 1rem;
+  }
+  .feature-icon{
+    width: 8.5rem;
   }
 }

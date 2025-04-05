@@ -115,9 +115,9 @@ export class ParticlesContainerService {
 
     //fetch texture
     const texture = new THREE.TextureLoader().load("texture/bright_64.webp");
-    texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
-texture.generateMipmaps = true;
-texture.minFilter = THREE.LinearMipmapLinearFilter;
+//     texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
+// texture.generateMipmaps = true;
+// texture.minFilter = THREE.LinearMipmapLinearFilter;
 
     //define material
     const material = new THREE.PointsMaterial({

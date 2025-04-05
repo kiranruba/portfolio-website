@@ -45,10 +45,10 @@ export class ParticlesScatterService {
       const textureLoader = new THREE.TextureLoader();
 
       textureLoader.load(texturePath, (texture) => {
-
-        texture.anisotropy =this.renderer.capabilities.getMaxAnisotropy();
-     texture.generateMipmaps = true;
-     texture.minFilter = THREE.LinearMipmapLinearFilter;
+     // 
+     //    texture.anisotropy =this.renderer.capabilities.getMaxAnisotropy();
+     // texture.generateMipmaps = true;
+     // texture.minFilter = THREE.LinearMipmapLinearFilter;
         this.particleGeometry = new THREE.BufferGeometry();
         const positions = new Float32Array(this.particleCount * 3);
         const opacityArray = new Float32Array(this.particleCount);

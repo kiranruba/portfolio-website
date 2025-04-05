@@ -2,7 +2,7 @@ import { ModelConfig } from './model.interface';
 
 export const MODELS_CONFIG: ModelConfig[] =[
   { section: 'home', models_array: [{ model: 'girlbird', camera_position: [8, 0, 0], camera_lookat: [0, 0, 0], xyz: [0, 0, 0], no_rotation_flag: 'true' }] },
-  { section: 'box', models_array: [{ model: 'cube', camera_position: [0, 0, 3.5], camera_lookat: [0, 1, 0], xyz: [0, 0, -0.25] }, { model: 'planet', camera_position: [0, 0, 3.5], camera_lookat: [0, 1, 0], xyz: [0, 0, -0.25] }] },
+  { section: 'box', models_array: [{ model: 'cube', camera_position: [0, 0, 3.5], camera_lookat: [0, 1, 0], xyz: [0, 0, 0] }, { model: 'planet', camera_position: [0, 0, 3.5], camera_lookat: [0, 1, 0], xyz: [0, 0, 0] }] },
   { section: 'blog-butterfly', models_array: [{ model: 'butterfly', camera_position: [0, 0, 4], camera_lookat: [0, 0, 0], xyz: [0, -0.1, 0] }] },
   { section: 'blog-cat', models_array: [{ model: 'cat', camera_position: [0, 0, 2.75], camera_lookat: [0, 0, 0], xyz: [0, 0.1, 0] }] },
   { section: 'blog-space', models_array: [{ model: 'spaceboi', camera_position: [0, 0, 3], camera_lookat: [0, 0, 0], xyz: [0, -0.6, 0] }] },

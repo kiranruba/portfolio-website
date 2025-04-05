@@ -158,5 +158,8 @@ div#signature-container {
   /* Styles for taller-than-wide screens */
   .particles-container {
     top: 35vh;
+    left: 10%;
+        width: 80vw !important;
+        height: 85vh !important;
   }
 }

@@ -19,6 +19,9 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   private animationFrameId: number | null = null;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
   private hasDecreasedVelocity = false;
+  private retryCount = 0;
+  private readonly maxRetries = 10;
+  private readonly retryDelay = 500;
   constructor(
     private scatterService: ParticlesScatterService,
     private containerService: ParticlesContainerService,
@@ -80,21 +83,32 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   private initializeServices(): void {
-    if (!this.containerCanvasRef || !this.scatterCanvasRef) {
-      console.error("Canvas elements not found!");
-      return;
+  if (!this.containerCanvasRef?.nativeElement || !this.scatterCanvasRef?.nativeElement) {
+    if (this.retryCount < this.maxRetries) {
+      console.warn(`Canvas refs not ready. Retrying (${this.retryCount + 1}/${this.maxRetries})...`);
+      this.retryCount++;
+      setTimeout(() => this.initializeServices(), this.retryDelay);
+    } else {
+      console.error("Canvas elements not found after max retries!");
     }
-
-    this.scatterService.initThreeJS(this.scatterCanvasRef.nativeElement);
-    this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-    this.containerService.loadParticles("home");
-    // Using a more precise timing method for the morph effect
-    setTimeout(() => {
-      if (this.containerService.isAnimating) {
-        this.containerService.animate();
-      }
-    }, 1500);
+    return;
   }
+
+  // Reset retry count once successful
+  this.retryCount = 0;
+
+  // Proceed with initialization
+  this.scatterService.initThreeJS(this.scatterCanvasRef.nativeElement);
+  this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
+  this.containerService.loadParticles("home");
+
+  // Kick off animation with a delay
+  setTimeout(() => {
+    if (this.containerService.isAnimating) {
+      this.containerService.animate();
+    }
+  }, 1500);
+}
   private loadSignatureSVG(): void {
     fetch("branding/sign.svg")
       .then((response) => response.text())

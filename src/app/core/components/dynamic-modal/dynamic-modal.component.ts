@@ -18,21 +18,34 @@ export class DynamicModalComponent implements AfterViewInit {
 
   isModalOpen = false;
   isClosing = false;
-
+  private retryCount = 0;
+  private maxRetries = 10;
   constructor(private containerService: ParticlesContainerService) {}
 
   ngAfterViewInit(): void {
     this.isModalOpen = true;
 
-    if (this.containerCanvasRef) {
+
+    this.particlesAnimate()
+
+
+  }
+  particlesAnimate(): void {
+    if (this.containerCanvasRef?.nativeElement) {
       this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
       this.containerService.loadParticles(this.modal_data.section);
 
       setTimeout(() => {
         this.containerService.animate();
       }, 500);
+    } else if (this.retryCount < this.maxRetries) {
+      this.retryCount++;
+      setTimeout(() => this.particlesAnimate(), 500);
+    } else {
+      console.error("Failed to load canvas reference for particles.");
     }
   }
+
 
   closeModal(): void {
     this.isClosing = true;

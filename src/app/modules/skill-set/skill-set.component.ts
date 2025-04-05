@@ -16,6 +16,9 @@ export class SkillSetComponent implements OnInit, AfterViewInit {
   @ViewChild("containerCanvas", { static: false })
   containerCanvasRef!: ElementRef;
   private transitionDuration = 2500;
+  private retryCount = 0;
+  private readonly maxRetries = 10;
+  private readonly retryDelay = 500;
   carouselItems: any[] = [];
   scrimOpacity = 0;
   active: boolean = false;
@@ -43,25 +46,7 @@ export class SkillSetComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.checkVisibility();
-    if (!this.containerCanvasRef) {
-      return;
-    }
-    this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-
-    this.containerService.loadParticles("box");
-    if (this.containerService.isAnimating) {
-      this.containerService.animate();
-    }
-    setTimeout(() => {
-      if (this.containerService.isAnimating) {
-        this.containerService.animate();
-      }
-    }, 500);
-    setTimeout(() => {
-      setInterval(() => {
-        this.containerService.setTarget();
-      }, this.transitionDuration);
-    }, this.transitionDuration);
+   this.initializeCanvasAndParticles();
   }
   @HostListener("window:scroll", [])
   onScroll(): void {
@@ -122,6 +107,41 @@ export class SkillSetComponent implements OnInit, AfterViewInit {
       };
     }
   }
+  private initializeCanvasAndParticles(): void {
+  if (!this.containerCanvasRef?.nativeElement) {
+    if (this.retryCount < this.maxRetries) {
+      console.warn(`Canvas ref not ready. Retrying (${this.retryCount + 1}/${this.maxRetries})...`);
+      this.retryCount++;
+      setTimeout(() => this.initializeCanvasAndParticles(), this.retryDelay);
+    } else {
+      console.error("Canvas element not found after max retries.");
+    }
+    return;
+  }
+
+  this.retryCount = 0;
+
+  this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
+  this.containerService.loadParticles("box");
+
+  if (this.containerService.isAnimating) {
+    this.containerService.animate();
+  }
+
+  setTimeout(() => {
+    if (this.containerService.isAnimating) {
+      this.containerService.animate();
+    }
+  }, 500);
+
+  // Schedule repeated morph transitions
+  setTimeout(() => {
+    setInterval(() => {
+      this.containerService.setTarget();
+    }, this.transitionDuration);
+  }, this.transitionDuration);
+}
+
   private checkVisibility(): void {
     const section = document.getElementById("box-out-section");
     if (!section) return;
