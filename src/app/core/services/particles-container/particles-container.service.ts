@@ -183,7 +183,7 @@ export class ParticlesContainerService {
       .array as Float32Array;
 
     for (let i = 0; i < this.particleTargetPositions.length; i++) {
-      positions[i] += (this.particleTargetPositions[i] - positions[i]) * 0.15;
+      positions[i] += (this.particleTargetPositions[i] - positions[i]) * 0.2;
     }
     this;
     this.particles.geometry.attributes["position"].needsUpdate = true;

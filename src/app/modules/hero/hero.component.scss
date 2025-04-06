@@ -131,10 +131,10 @@ div#signature-container {
 @media (min-width: 768px) and (max-width: 1200px) and (max-aspect-ratio: 1/1) and (orientation: portrait) {
   /* styles for when height is more than width */
   .particles-container {
-    top: 20vh;
+    top: 20%;
     left: 0%;
-    width: 80vw !important;
-    height: 100vh !important;
+    width: 80% !important;
+    height: 100% !important;
   }
   div#signature-container {
     width: 100%;
@@ -148,18 +148,18 @@ div#signature-container {
 
 @media (max-width: 1200px) {
   .particles-container {
-    top: 18vh;
-    left: 35vw;
-    width: 65vw !important;
-    height: 70vh !important;
+    top: 18%;
+    left: 35%;
+    width: 65% !important;
+    height: 70% !important;
   }
 }
 @media (orientation: portrait) {
   /* Styles for taller-than-wide screens */
   .particles-container {
-    top: 35vh;
-    left: 10vw;
-        width: 80vw !important;
-        height: 85vh !important;
+    top: 35%;
+    left: 10%;
+        width: 80% !important;
+        height: 85% !important;
   }
 }

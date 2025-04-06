@@ -16,6 +16,8 @@ export class ParticlesScatterService {
   private direction = new THREE.Vector3(0, 1, 0); // Default movement down
   private sparkleIntensity = 0.5;
   private sparkleFrequency = 0.1;
+  private isRendering = true;
+
   constructor() {
     this.onResize = this.onResize.bind(this);
     window.addEventListener("resize", this.onResize);
@@ -167,14 +169,12 @@ export class ParticlesScatterService {
   }
 
   private animate = () => {
-    if (!this.particles || !this.renderer || !this.camera || !this.scene) return;
-
-// DOM check (optional but helpful):
-if (!this.renderer.domElement || !document.body.contains(this.renderer.domElement)) return;
-
+    if (!this.isRendering) return; // Pause rendering
 
     requestAnimationFrame(this.animate);
-    if (!this.particles) return;
+
+    if (!this.particles || !this.renderer || !this.camera || !this.scene) return;
+    if (!this.renderer.domElement || !document.body.contains(this.renderer.domElement)) return;
 
     const positions = this.particleGeometry.attributes["position"].array;
     const opacityArray = this.particleGeometry.attributes["alpha"].array;
@@ -196,4 +196,16 @@ if (!this.renderer.domElement || !document.body.contains(this.renderer.domElemen
     this.particleGeometry.attributes["alpha"].needsUpdate = true;
     this.renderer.render(this.scene, this.camera);
   };
+
+    pauseRendering(): void {
+    this.isRendering = false;
+  }
+
+    resumeRendering(): void {
+    if (!this.isRendering) {
+      this.isRendering = true;
+      this.animate(); // restart animation loop
+    }
+  }
+
 }

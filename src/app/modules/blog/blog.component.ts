@@ -215,6 +215,7 @@ setActive(index: number): void {
     });
 }
 openModal(post: Post): void {
+  this.scatterService.pauseRendering();
     this.selectedPost = post;
     this.stopAutoSlide();
     history.pushState({ modalOpen: true }, '', '/modal-open');
@@ -231,6 +232,7 @@ openModal(post: Post): void {
 
 
      closeModal(): void {
+       this.scatterService.resumeRendering();
        this.selectedPost = null;
        document.documentElement.classList.remove('no-scroll');
        if (window.history.state?.modalOpen) {
