@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import{DynamicModalComponent}from '../../core/components/dynamic-modal/dynamic-modal.component';
 import { Location } from '@angular/common';
 const SLIDE_DURATION = 4000; //  Centralized timing for easy maintenance
-import { ParticlesScatterService } from '../../core/services/particles-scatter/particles-scatter.service';
+// import { ParticlesScatterService } from '../../core/services/particles-scatter/particles-scatter.service';
 
 @Component({
   selector: 'app-blog',
@@ -63,7 +63,9 @@ export class BlogComponent implements OnInit, OnDestroy,AfterViewInit {
         this.isControlActive = sectionTop < triggerPoint;
       }
     }
-  constructor(private blogService: FetchDataService, private el: ElementRef,private location: Location,  private scatterService: ParticlesScatterService) {}
+  constructor(private blogService: FetchDataService, private el: ElementRef,private location: Location,
+     // private scatterService: ParticlesScatterService
+   ) {}
 
   ngOnInit(): void {
     this.blogService.getPosts().subscribe(
