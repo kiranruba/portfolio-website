@@ -32,7 +32,7 @@ export class ParticlesContainerService {
   private modelBubbleHueShift = false;
   private modelSparkle = true;
   private modelFadeinDisappear = true;
-
+  public isModal = false;
   constructor(
     private dataService: FetchDataService,
     private morphService: MorphEffectService
@@ -106,8 +106,10 @@ export class ParticlesContainerService {
     }
 
     // Start loading the first model
+    const isMobile = this.isMobile();
     const targetVertices = this.allModelVertices[this.currentTargetIndex];
-    const particleCount = Math.min(this.maxParticles, targetVertices.length);
+    const reducedParticleCount = this.isModal && isMobile ? 4000 : this.maxParticles;
+    const particleCount =Math.min(reducedParticleCount, targetVertices.length);
     this.particlePositions = new Float32Array(particleCount * 3);
     this.particleTargetPositions = new Float32Array(particleCount * 3);
     this.particleColors = new Float32Array(this.maxParticles * 3);
@@ -144,11 +146,10 @@ export class ParticlesContainerService {
 
     //fetch texture
     const texture = new THREE.TextureLoader().load("texture/bright_64.webp");
-
     //define material
     const material = new THREE.PointsMaterial({
       vertexColors: true,
-      size: 0.013,
+      size: isMobile ? 0.008 : 0.013,
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending,
@@ -277,6 +278,10 @@ export class ParticlesContainerService {
   get isAnimating(): boolean {
     return this.animation;
   }
+  private isMobile(): boolean {
+  return window.innerWidth < 768;
+}
+
   destroy(): void {
   this.animation = false;
 

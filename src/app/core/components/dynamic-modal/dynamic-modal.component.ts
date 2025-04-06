@@ -35,6 +35,7 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
 }
   particlesAnimate(): void {
     if (this.containerCanvasRef?.nativeElement) {
+      this.containerService.isModal = true;
       this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
       this.containerService.loadParticles(this.modal_data.section);
 
