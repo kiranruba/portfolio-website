@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import{DynamicModalComponent}from '../../core/components/dynamic-modal/dynamic-modal.component';
 import { Location } from '@angular/common';
 const SLIDE_DURATION = 4000; //  Centralized timing for easy maintenance
-// import { ParticlesScatterService } from '../../core/services/particles-scatter/particles-scatter.service';
 
 @Component({
   selector: 'app-blog',
@@ -32,29 +31,12 @@ export class BlogComponent implements OnInit, OnDestroy,AfterViewInit {
   isLoading = true;
   lastSetTime: number  = 0;
   pauseflag = false;
-  textBlocks = [
-        "  Well, it's time we transcend further!",
-        "  Aren't we just a little sprinkle from the sweeping stardust?",
-        "  A slight murmur of the encompassing vast?",
-        "  Now hear, hear from my little zest!",
-        "  One stroke, one tale at a time…",
-    ];
-
-  scrimOpacity = 0;
   isControlActive = false;
-    private scrollTimeout: any;
     private touchStartX = 0;
     private touchEndX = 0;
     @ViewChild('slideshow') slideshowRef!: ElementRef;
     @HostListener('window:scroll', [])
     onScroll(): void {
-        clearTimeout(this.scrollTimeout);
-        this.scrollTimeout = setTimeout(() => {
-            const container = document.querySelector('.poem-scroll-container') as HTMLElement;
-            const containerRect = container.getBoundingClientRect();
-            const scrollProgress = (window.innerHeight - containerRect.top) / containerRect.height;
-              this.scrimOpacity = Math.min(0.30+scrollProgress * 0.05, 0.35);
-        }, 100);
         const section = document.querySelector('.carousel');
         if (section) {
         const sectionTop = section.getBoundingClientRect().top;
@@ -63,9 +45,7 @@ export class BlogComponent implements OnInit, OnDestroy,AfterViewInit {
         this.isControlActive = sectionTop < triggerPoint;
       }
     }
-  constructor(private blogService: FetchDataService, private el: ElementRef,private location: Location,
-     // private scatterService: ParticlesScatterService
-   ) {}
+  constructor(private blogService: FetchDataService, private el: ElementRef,private location: Location, ) {}
 
   ngOnInit(): void {
     this.blogService.getPosts().subscribe(
@@ -217,8 +197,6 @@ setActive(index: number): void {
     });
 }
 openModal(post: Post): void {
-  // this.scatterService.pauseRendering();
-  // this.scatterService.resizeRenderer();
     this.selectedPost = post;
     this.stopAutoSlide();
     history.pushState({ modalOpen: true }, '', '/modal-open');
@@ -235,9 +213,6 @@ openModal(post: Post): void {
 
 
      closeModal(): void {
-       // this.scatterService.resumeRendering();
-       // this.scatterService.resizeRenderer();
-       // this.scatterService.setvelocity(0.002)
        this.selectedPost = null;
        document.documentElement.classList.remove('no-scroll');
        if (window.history.state?.modalOpen) {
@@ -274,43 +249,7 @@ openModal(post: Post): void {
       }
   }
 
-  getStyle(index: number) {
-      const totalItems = 5;
-      const revealStart = index * (1 / totalItems);
-      const revealEnd = revealStart + (1 / totalItems);
 
-      const container = document.querySelector('.poem-scroll-container') as HTMLElement;
-      if (!container) return { opacity: 0, transform: 'translateY(50px)' };
-
-      const containerRect = container.getBoundingClientRect();
-      if (containerRect.height === 0) return { opacity: 0, transform: 'translateY(50px)' };
-
-      const scrollProgress = (window.innerHeight - containerRect.top) / containerRect.height;
-
-      if (scrollProgress > revealStart && scrollProgress < revealEnd) {
-          const opacity = (scrollProgress - revealStart) / (revealEnd - revealStart);
-        //  console.log("am i", index*opacity)
-           // this.scatterService.setZoom(3-(index*opacity));
-           //     this.scatterService.setvelocity(0.002*(index*opacity));
-          return {
-              opacity: opacity,
-              transform: `translateY(${(1 - opacity) * 50}px)`
-          };
-      } else if (scrollProgress >= revealEnd) {
-
-          return {
-
-              opacity: 1,
-              transform: `translateY(0px)`
-          };
-      } else {
-
-          return {
-              opacity: 0,
-              transform: `translateY(50px)`
-          };
-      }
-  }
 
   handleBrowserBack = (): void => {
    if (this.selectedPost) {

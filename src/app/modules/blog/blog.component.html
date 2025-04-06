@@ -1,15 +1,3 @@
-<!-- introduction for blog section -->
-<div class="poem-scroll-container"[ngStyle]="{'--scrim-opacity': scrimOpacity}">
-  <div class="poem-sticky">
-    <div class="poem-lockup-container">
-      <div class="poem-lockup section-content">
-        <div *ngFor="let item of textBlocks; let i = index" class="copy poem-copy" [ngStyle]="getStyle(i)">
-          <p>{{ item }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <!-- carousal of blog posts -->
 <div class="section">
   <div class="carousel" #slideshow>

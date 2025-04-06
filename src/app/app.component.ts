@@ -6,6 +6,7 @@ import { BlogComponent } from "./modules/blog/blog.component";
 import { SkillSetComponent } from "./modules/skill-set/skill-set.component";
 import { NavbarComponent } from "./core/components/navbar/navbar.component";
 import { FooterComponent } from "./core/components/footer/footer.component";
+import { PoemIntroComponent } from "./modules/poem-intro/poem-intro.component";
 
 @Component({
   selector: "app-root",
@@ -17,6 +18,7 @@ import { FooterComponent } from "./core/components/footer/footer.component";
     SkillSetComponent,
     NavbarComponent,
     FooterComponent,
+    PoemIntroComponent
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
