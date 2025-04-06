@@ -42,6 +42,8 @@ export class ParticlesScatterService {
   }
 
   private createParticles(texturePath: string): Promise<void> {
+      const isMobile = this.isMobile();
+      this.particleCount= isMobile ? 300 : 1200;
     return new Promise((resolve) => {
       if (this.particles) {
         this.scene.remove(this.particles);
@@ -73,7 +75,7 @@ export class ParticlesScatterService {
         ); // Ensure alpha is set
 
         this.particleMaterial = new THREE.PointsMaterial({
-          size: 0.035,
+          size: isMobile ? 0.009 : 0.035,
           transparent: true,
           opacity: 0.9,
           blending: THREE.AdditiveBlending,
@@ -201,7 +203,9 @@ export class ParticlesScatterService {
     pauseRendering(): void {
     this.isRendering = false;
   }
-
+  private isMobile(): boolean {
+  return window.innerWidth < 768;
+}
     resumeRendering(): void {
     if (!this.isRendering) {
       this.isRendering = true;
