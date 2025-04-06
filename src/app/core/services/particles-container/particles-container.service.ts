@@ -108,7 +108,7 @@ export class ParticlesContainerService {
     // Start loading the first model
     const isMobile = this.isMobile();
     const targetVertices = this.allModelVertices[this.currentTargetIndex];
-    const reducedParticleCount = this.isModal && isMobile ? 4000 : this.maxParticles;
+    const reducedParticleCount = this.isModal && isMobile ? 3000 : this.maxParticles;
     const particleCount =Math.min(reducedParticleCount, targetVertices.length);
     this.particlePositions = new Float32Array(particleCount * 3);
     this.particleTargetPositions = new Float32Array(particleCount * 3);

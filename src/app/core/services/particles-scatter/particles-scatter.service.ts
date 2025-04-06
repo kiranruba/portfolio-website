@@ -75,7 +75,7 @@ export class ParticlesScatterService {
         ); // Ensure alpha is set
 
         this.particleMaterial = new THREE.PointsMaterial({
-          size: isMobile ? 0.009 : 0.035,
+          size: 0.035,
           transparent: true,
           opacity: 0.9,
           blending: THREE.AdditiveBlending,
