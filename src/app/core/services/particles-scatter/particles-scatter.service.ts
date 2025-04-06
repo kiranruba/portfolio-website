@@ -31,7 +31,8 @@ export class ParticlesScatterService {
       1000
     );
     this.camera.position.z = 6;
-    this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true,antialias: true });
+    this.renderer.setClearColor(0x000000, 0);
     const width = Math.max(1, window.innerWidth);
     const height = Math.max(1, window.innerHeight);
     this.renderer.setSize(width, height);
