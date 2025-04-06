@@ -244,6 +244,7 @@ section {
   background: linear-gradient(135deg, #031326, #031326);
   border: 1px solid rgba(104, 203, 237, 0.3);
   opacity: 0.9;
+  display: flex;justify-content: center;align-items: center;
 }
 
 .details-button:hover .front {transform: translateZ(1.1rem);}
@@ -253,7 +254,7 @@ section {
 .details-button:hover .top { transform: rotateX(90deg) translateZ(1.1rem);}
 .details-button:hover .bottom {transform: rotateX(-90deg) translateZ(1.1rem);}
 
-.front {transform: translateZ(0.625rem);display: flex;justify-content: center;align-items: center;}
+.front {transform: translateZ(0.625rem);}
 .back {transform: rotateY(180deg) translateZ(0.625rem);}
 .left {transform: rotateY(-90deg) translateZ(0.625rem);}
 .right {transform: rotateY(90deg) translateZ(0.625rem);}
