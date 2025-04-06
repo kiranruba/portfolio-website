@@ -21,7 +21,7 @@
 
       <!-- Particle Canvas -->
       <canvas
-        *ngIf="modal_data.section"
+      *ngIf="modal_data.section && !disableParticles"
         class="particles-container"
         #containerCanvas>
       </canvas>

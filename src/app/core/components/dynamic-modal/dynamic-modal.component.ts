@@ -18,6 +18,7 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
 
   isModalOpen = false;
   isClosing = false;
+  disableParticles = false;
   private retryCount = 0;
   private maxRetries =4;
   constructor(private containerService: ParticlesContainerService) {}
@@ -28,14 +29,17 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
         this.isModalOpen = true;
      });
 
-    this.particlesAnimate()
+     this.disableParticles = this.isLowEndGPU();
+
+   if (!this.disableParticles) {
+     this.particlesAnimate();
+   }
   }
   ngOnDestroy(): void {
   this.containerService.destroy();
 }
   particlesAnimate(): void {
     if (this.containerCanvasRef?.nativeElement) {
-      this.containerService.isModal = true;
       this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
       this.containerService.loadParticles(this.modal_data.section);
 
@@ -60,6 +64,26 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
       this.close.emit();
     }, 1100);
   }
+  isLowEndGPU(): boolean {
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") as WebGLRenderingContext | null
+              || canvas.getContext("experimental-webgl") as WebGLRenderingContext | null;
+
+      if (!gl) return true;
+
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      if (!debugInfo) return false;
+
+      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)?.toLowerCase();
+      const lowEndKeywords = ["mali", "adreno 3", "powervr", "intel hd", "apple a7", "apple a8"];
+      return lowEndKeywords.some(keyword => renderer.includes(keyword));
+    } catch {
+      return true;
+    }
+  }
+
+
 
   highlightText(text: string, highlights: string[]): string {
     if (!highlights?.length) return text;

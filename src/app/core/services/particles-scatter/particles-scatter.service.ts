@@ -42,8 +42,6 @@ export class ParticlesScatterService {
   }
 
   private createParticles(texturePath: string): Promise<void> {
-      const isMobile = this.isMobile();
-      this.particleCount= isMobile ? 300 : 1200;
     return new Promise((resolve) => {
       if (this.particles) {
         this.scene.remove(this.particles);
@@ -203,9 +201,7 @@ export class ParticlesScatterService {
     pauseRendering(): void {
     this.isRendering = false;
   }
-  private isMobile(): boolean {
-  return window.innerWidth < 768;
-}
+
     resumeRendering(): void {
     if (!this.isRendering) {
       this.isRendering = true;
