@@ -215,8 +215,8 @@ setActive(index: number): void {
     });
 }
 openModal(post: Post): void {
-  this.scatterService.pauseRendering();
-  this.scatterService.resizeRenderer();
+  // this.scatterService.pauseRendering();
+  // this.scatterService.resizeRenderer();
     this.selectedPost = post;
     this.stopAutoSlide();
     history.pushState({ modalOpen: true }, '', '/modal-open');
@@ -233,9 +233,9 @@ openModal(post: Post): void {
 
 
      closeModal(): void {
-       this.scatterService.resumeRendering();
-       this.scatterService.resizeRenderer();
-       this.scatterService.setvelocity(0.002)
+       // this.scatterService.resumeRendering();
+       // this.scatterService.resizeRenderer();
+       // this.scatterService.setvelocity(0.002)
        this.selectedPost = null;
        document.documentElement.classList.remove('no-scroll');
        if (window.history.state?.modalOpen) {
