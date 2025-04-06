@@ -8,7 +8,7 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.1);
   &.active {
     opacity: 1;
     transform: translateY(0);
@@ -111,7 +111,8 @@ p.box-text {
 @media (max-width: 1200px) {
   .particles-container {
     width: 60vw !important;
-  height: 30vh !important;
-  left: 15vw;
+    height: 50vh !important;
+    margin-top: -5rem;
+    left: 15vw;
   }
 }

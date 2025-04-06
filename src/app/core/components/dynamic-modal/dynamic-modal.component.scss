@@ -424,6 +424,7 @@ span.tech_name {
   font-style: oblique;
   flex-direction: column;
   color: $text-special;
+  padding-bottom: 4rem;
   .img-sign {
     display: flex;
     flex-direction: row;
@@ -520,5 +521,16 @@ span.tech_name {
   }
   .feature-icon{
     width: 8.5rem;
+  }
+  .feature-container{
+    padding: 2px;
+    padding-bottom: 1.5rem;
+    p{
+      line-height: 1.5rem;
+    }
+  }
+  .feature-card{
+    padding: 1.5rem;
+    width: 45rem;
   }
 }

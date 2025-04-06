@@ -36,22 +36,22 @@ h2 {
   font-size: 3rem;
   font-weight: bolder;
   @media (max-width: 768px) {
-  font-size: 2rem;
+  font-size: 2.5rem;
   }
   @media (max-width: 480px) {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
 
 h3 {
   @extend .text-gradient;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: bold;
   @media (max-width: 768px) {
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   }
   @media (max-width: 480px) {
-  font-size: 1rem;
+  font-size: 1.5rem;
   }
 }
 .no-scroll {

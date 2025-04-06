@@ -15,7 +15,7 @@ import { ParticlesContainerService } from "../../core/services/particles-contain
 export class SkillSetComponent implements OnInit, AfterViewInit {
   @ViewChild("containerCanvas", { static: false })
   containerCanvasRef!: ElementRef;
-  private transitionDuration = 2500;
+  private transitionDuration = 3000;
   private retryCount = 0;
   private readonly maxRetries = 10;
   private readonly retryDelay = 500;
@@ -57,7 +57,7 @@ export class SkillSetComponent implements OnInit, AfterViewInit {
       (window.innerHeight - containerRect.top) / containerRect.height;
 
     // Control scrim effect
-    this.scrimOpacity = Math.min(0.05 + scrollProgress * 0.25, 0.25);
+    this.scrimOpacity = Math.min(0.15 + scrollProgress * 0.25, 0.25);
   }
 
   getStyle(index: number) {

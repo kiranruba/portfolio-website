@@ -1,8 +1,9 @@
 // styling for introduction poem section
 .poem-scroll-container {
   position: relative;
+  margin-top:-80vh;
   height: 150vh;
-  background: rgba(0, 0, 0, var(--scrim-opacity, 0));
+  background: rgba(0, 0, 0, var(--scrim-opacity, 0.45));
 }
 .poem-sticky {
   position: sticky;

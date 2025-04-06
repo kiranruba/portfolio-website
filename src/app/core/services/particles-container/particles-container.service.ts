@@ -174,6 +174,7 @@ export class ParticlesContainerService {
 
   animate() {
     requestAnimationFrame(() => this.animate());
+    if (!this.particles) return; 
     const positions = this.particles.geometry.attributes["position"]
       .array as Float32Array;
 

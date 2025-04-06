@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef,HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef,HostListener, ViewChild,AfterViewInit } from '@angular/core';
 import { FetchDataService } from '../../core/services/fetch-data/fetch-data.service';
 import{Post} from'../../core/models/model.interface';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { ParticlesScatterService } from '../../core/services/particles-scatter/p
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.scss'
 })
-export class BlogComponent implements OnInit, OnDestroy {
+export class BlogComponent implements OnInit, OnDestroy,AfterViewInit {
   posts: Post[] = [];
   Math = Math;
   autoSlideInterval: any;
@@ -40,10 +40,12 @@ export class BlogComponent implements OnInit, OnDestroy {
         "  One stroke, one tale at a time…",
     ];
 
-    scrimOpacity = 0;
-isControlActive = false;
+  scrimOpacity = 0;
+  isControlActive = false;
     private scrollTimeout: any;
-
+    private touchStartX = 0;
+    private touchEndX = 0;
+    @ViewChild('slideshow') slideshowRef!: ElementRef;
     @HostListener('window:scroll', [])
     onScroll(): void {
         clearTimeout(this.scrollTimeout);
@@ -51,7 +53,7 @@ isControlActive = false;
             const container = document.querySelector('.poem-scroll-container') as HTMLElement;
             const containerRect = container.getBoundingClientRect();
             const scrollProgress = (window.innerHeight - containerRect.top) / containerRect.height;
-              this.scrimOpacity = Math.min(0.25+scrollProgress * 0.10, 0.35);
+              this.scrimOpacity = Math.min(0.30+scrollProgress * 0.05, 0.35);
         }, 100);
         const section = document.querySelector('.carousel');
         if (section) {
@@ -61,11 +63,6 @@ isControlActive = false;
         this.isControlActive = sectionTop < triggerPoint;
       }
     }
-
-
-
-  @ViewChild('slideshow') slideshow!: ElementRef;
-
   constructor(private blogService: FetchDataService, private el: ElementRef,private location: Location,  private scatterService: ParticlesScatterService) {}
 
   ngOnInit(): void {
@@ -81,7 +78,32 @@ isControlActive = false;
       }
     );
   }
+  ngAfterViewInit() {
+    const el = this.slideshowRef.nativeElement;
 
+    el.addEventListener('touchstart', (e: TouchEvent) => {
+      this.touchStartX = e.changedTouches[0].screenX;
+    });
+
+    el.addEventListener('touchend', (e: TouchEvent) => {
+      this.touchEndX = e.changedTouches[0].screenX;
+      this.handleSwipe();
+    });
+  }
+  private handleSwipe(): void {
+  const diff = this.touchStartX - this.touchEndX;
+
+  // minimum swipe distance to consider
+  if (Math.abs(diff) < 50) return;
+
+  if (diff > 0) {
+    // Swiped Left
+    this.scrollToIndex(this.active + 1);
+  } else {
+    // Swiped Right
+    this.scrollToIndex(this.active - 1);
+  }
+}
   initObserver(): void {
     this.observer = new IntersectionObserver(
       (entries) => {

@@ -43,7 +43,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     );
     observer.observe(this.el.nativeElement);
 
-    window.addEventListener("scroll", this.handleScroll.bind(this));
+    
   }
   @HostListener("window:resize")
   onResize(): void {
@@ -163,29 +163,10 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       filter: "blur(0px)", // Clear text as it animates in
       duration: 2.5,
       ease: "cubic-bezier(0.25, 1, 0.5, 1)",
-      delay: 1,
+      delay: 1.5,
     });
   }
-  private handleScroll(): void {
-    const textContainer =
-      this.el.nativeElement.querySelector(".text-container");
-    const scrollPosition = window.scrollY;
 
-    const fadeOutStart = 150; // Start fade-out earlier
-    const fadeOutEnd = 700; // Extend for smoother transition
-    const parallaxY = -scrollPosition * 0.2; // Parallax movement
-
-    const opacity = Math.max(0,1 - (scrollPosition - fadeOutStart) / (fadeOutEnd - fadeOutStart));
-    const scale = Math.max(0.85,1 - ((scrollPosition - fadeOutStart) / (fadeOutEnd - fadeOutStart)) * 0.15);
-
-    gsap.to(textContainer, {
-      opacity,
-      scale,
-      y: parallaxY,
-      duration: 0.5,
-      ease: "power2.out",
-    });
-  }
 
   decreaseVelocity(duration: number = 500) {
     if (this.hasDecreasedVelocity) return; // Prevent duplicate calls

@@ -161,7 +161,9 @@ export class ParticlesScatterService {
   }
 
   private animate = () => {
+
     requestAnimationFrame(this.animate);
+    if (!this.particles) return; 
 
     const positions = this.particleGeometry.attributes["position"].array;
     const opacityArray = this.particleGeometry.attributes["alpha"].array;

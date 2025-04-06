@@ -77,7 +77,7 @@
     justify-content: space-between;
     padding: 0.5rem;
     img {
-    width: 1.25rem;
+    width: 1.5rem;
       }
     .available-for-hire {
       color: #d4fafe;
@@ -103,8 +103,8 @@
     background: rgba(3, 19, 38, 0.4);
     border: 0.1px solid rgba(104, 203, 237, 0.1);
     border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease;
 
@@ -118,7 +118,7 @@
 
     .bar {
       position: absolute;
-      width: 1.25rem;
+      width: 1rem;
       height: 1.5px;
       background: #d4fafe;
       transition: transform 0.3s ease, opacity 0.3s ease;
@@ -145,13 +145,6 @@
         transform: translateY(0) rotate(-45deg);
       }
     }
-
-    .bar {
-      width: 24px;
-      height: 3px;
-      background: #d4fafe;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
   }
 
   .menu-content {
@@ -175,8 +168,8 @@
     .close {
       position: relative;
       border-radius: 50%;
-      padding: 1rem;
-      padding-bottom: 0.8rem;
+      padding: .75rem;
+      display: flex;
       background: rgba(3, 19, 38, 0.4);
       border: 0.1px solid rgba(104, 203, 237, 0.1);
       cursor: pointer;
@@ -189,8 +182,8 @@
           0 0 10px rgba(104, 203, 237, 0.6);
       }
       img {
-        height: 20px;
-        width: 20px;
+        // height: 20px;
+        width: 0.75rem;
       }
     }
 
