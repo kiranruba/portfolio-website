@@ -27,13 +27,17 @@ export class CarouselContentComponent implements AfterViewInit ,OnDestroy{
   ) {}
 
   ngAfterViewInit(): void {
-    if (!this.containerCanvasRef) return;
+  const waitForCanvas = () => {
+    if (!this.containerCanvasRef?.nativeElement) {
+      requestAnimationFrame(waitForCanvas); // Keep retrying until defined
+      return;
+    }
 
+    // Canvas is now defined, set up the observer
     this.observer = new IntersectionObserver(
       (entries) => {
         for (let entry of entries) {
           if (entry.isIntersecting) {
-            // Section in view - start animation
             this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
             this.containerService.loadParticles(this.content.section);
 
@@ -47,16 +51,19 @@ export class CarouselContentComponent implements AfterViewInit ,OnDestroy{
               }
             }, 500);
           } else {
-            // Section out of view - pause animation
             this.containerService.disposeParticles();
           }
         }
       },
-      { threshold: 0.4 } // Adjust based on how much needs to be visible
+      { threshold: 0.4 }
     );
 
     this.observer.observe(this.containerCanvasRef.nativeElement);
-  }
+  };
+
+  waitForCanvas(); // Start the loop
+}
+
   ngOnDestroy(): void {
     if (this.observer && this.containerCanvasRef) {
       this.observer.unobserve(this.containerCanvasRef.nativeElement);

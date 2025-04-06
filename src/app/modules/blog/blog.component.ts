@@ -278,7 +278,14 @@ openModal(post: Post): void {
       const revealEnd = revealStart + (1 / totalItems);
 
       const container = document.querySelector('.poem-scroll-container') as HTMLElement;
+      if (this.selectedPost || !container ) {
+      return { opacity: 0, transform: 'translateY(50px)' };
+    }
+
+
       const containerRect = container.getBoundingClientRect();
+      if (containerRect.height === 0) return { opacity: 0, transform: 'translateY(50px)' };
+
       const scrollProgress = (window.innerHeight - containerRect.top) / containerRect.height;
 
       if (scrollProgress > revealStart && scrollProgress < revealEnd) {

@@ -131,10 +131,10 @@ div#signature-container {
 @media (min-width: 768px) and (max-width: 1200px) and (max-aspect-ratio: 1/1) and (orientation: portrait) {
   /* styles for when height is more than width */
   .particles-container {
-    top: 20vh;
+    top: 20dvh;
     left: 0%;
     width: 80vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
   }
   div#signature-container {
     width: 100%;
@@ -146,28 +146,30 @@ div#signature-container {
   }
   .particles-scatter {
       width: 100vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
+    inset: 0;
+ overflow: hidden;
   }
 }
 
 @media (max-width: 1200px) {
   .particles-container {
-    top: 18vh;
+    top: 18dvh;
     left: 35vw;
     width: 65vw !important;
-    height: 70vh !important;
+    height: 70dvh !important;
   }
 }
 @media (orientation: portrait) {
   /* Styles for taller-than-wide screens */
   .particles-container {
-    top: 35vh;
+    top: 35dvh;
     left: 10vw;
         width: 80vw !important;
-        height: 85vh !important;
+        height: 85dvh !important;
   }
   .particles-scatter {
       width: 100vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
   }
 }
