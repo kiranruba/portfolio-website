@@ -177,8 +177,11 @@ export class ParticlesContainerService {
   }
 
   animate() {
-    requestAnimationFrame(() => this.animate());
-    if (!this.particles) return;
+    if (!this.animation) return;
+
+      requestAnimationFrame(() => this.animate());
+
+      if (!this.particles) return;
     const positions = this.particles.geometry.attributes["position"]
       .array as Float32Array;
 
@@ -274,4 +277,28 @@ export class ParticlesContainerService {
   get isAnimating(): boolean {
     return this.animation;
   }
+  destroy(): void {
+  this.animation = false;
+
+  // Dispose of geometry, materials, and remove from scene
+  this.disposeParticles();
+
+  // Dispose renderer
+  if (this.renderer) {
+    this.renderer.dispose();
+    this.renderer.forceContextLoss?.();
+    this.renderer.domElement?.remove();
+  }
+
+  // Clear references
+  this.scene = null as any;
+  this.camera = null as any;
+  this.renderer = null as any;
+  this.particles = null as any;
+  this.allModelVertices = [];
+  this.particlePositions = null as any;
+  this.particleTargetPositions = null as any;
+  this.particleColors = null as any;
+}
+
 }

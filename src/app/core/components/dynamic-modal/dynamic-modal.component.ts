@@ -1,4 +1,4 @@
-import {  Component,  Input,  Output,  EventEmitter,  AfterViewInit,  ViewChild,  ElementRef,} from "@angular/core";
+import {  Component,  Input,  Output,  EventEmitter,  AfterViewInit, OnDestroy, ViewChild,  ElementRef,} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ParticlesContainerService } from "../../services/particles-container/particles-container.service";
 
@@ -10,7 +10,7 @@ import { ParticlesContainerService } from "../../services/particles-container/pa
   styleUrl: "./dynamic-modal.component.scss",
   providers: [ParticlesContainerService],
 })
-export class DynamicModalComponent implements AfterViewInit {
+export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
   @Input() modal_data: any;
   @Output() close = new EventEmitter<void>();
 
@@ -29,9 +29,10 @@ export class DynamicModalComponent implements AfterViewInit {
      });
 
     this.particlesAnimate()
-
-
   }
+  ngOnDestroy(): void {
+  this.containerService.destroy();
+}
   particlesAnimate(): void {
     if (this.containerCanvasRef?.nativeElement) {
       this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
@@ -50,7 +51,8 @@ export class DynamicModalComponent implements AfterViewInit {
 
   closeModal(): void {
     this.isClosing = true;
-
+    // Stop particles & clean up WebGL
+    this.containerService.destroy();
     setTimeout(() => {
       this.isModalOpen = false;
       this.isClosing = false;
