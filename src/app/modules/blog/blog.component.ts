@@ -278,10 +278,7 @@ openModal(post: Post): void {
       const revealEnd = revealStart + (1 / totalItems);
 
       const container = document.querySelector('.poem-scroll-container') as HTMLElement;
-      if (this.selectedPost || !container ) {
-      return { opacity: 0, transform: 'translateY(50px)' };
-    }
-
+      if (!container) return { opacity: 0, transform: 'translateY(50px)' };
 
       const containerRect = container.getBoundingClientRect();
       if (containerRect.height === 0) return { opacity: 0, transform: 'translateY(50px)' };
@@ -290,8 +287,9 @@ openModal(post: Post): void {
 
       if (scrollProgress > revealStart && scrollProgress < revealEnd) {
           const opacity = (scrollProgress - revealStart) / (revealEnd - revealStart);
-           this.scatterService.setZoom(3-(index*opacity));
-               this.scatterService.setvelocity(0.002*(index*opacity));
+        //  console.log("am i", index*opacity)
+           // this.scatterService.setZoom(3-(index*opacity));
+           //     this.scatterService.setvelocity(0.002*(index*opacity));
           return {
               opacity: opacity,
               transform: `translateY(${(1 - opacity) * 50}px)`
