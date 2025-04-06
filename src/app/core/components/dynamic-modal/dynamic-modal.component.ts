@@ -23,8 +23,10 @@ export class DynamicModalComponent implements AfterViewInit {
   constructor(private containerService: ParticlesContainerService) {}
 
   ngAfterViewInit(): void {
-    this.isModalOpen = true;
 
+    setTimeout(() => {
+        this.isModalOpen = true;
+     });
 
     this.particlesAnimate()
 

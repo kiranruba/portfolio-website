@@ -119,7 +119,8 @@ p {
 }
 .title {
   display: flex;
-  width: inherit;
+  width: initial;
+  text-align: center;
   align-items: center;
   justify-content: center;
 }
@@ -443,6 +444,9 @@ span.tech_name {
   .paraimg-container {
     flex-direction: column-reverse;
 
+}
+p {
+    font-size: 1.2rem;
 }
   .content-container {
     padding-left: 3rem;

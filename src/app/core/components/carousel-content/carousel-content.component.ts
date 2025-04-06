@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ParticlesContainerService } from '../../services/particles-container/particles-container.service';
 
@@ -10,10 +10,12 @@ import { ParticlesContainerService } from '../../services/particles-container/pa
   styleUrl: './carousel-content.component.scss',
   providers: [ParticlesContainerService],
 })
-export class CarouselContentComponent implements AfterViewInit {
+export class CarouselContentComponent implements AfterViewInit ,OnDestroy{
   @Input() content: any;
    @Input() index!: number; // Add this for alternating layout
   @ViewChild('containerCanvas', { static: false }) containerCanvasRef!: ElementRef;
+  // @ViewChild('container', { static: true }) containerRef!: ElementRef;
+  private observer!: IntersectionObserver;
 
   get nativeElement(): HTMLElement {
     return this.el.nativeElement;
@@ -27,18 +29,39 @@ export class CarouselContentComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     if (!this.containerCanvasRef) return;
 
-    this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-    this.containerService.loadParticles(this.content.section);
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        for (let entry of entries) {
+          if (entry.isIntersecting) {
+            // Section in view - start animation
+            this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
+            this.containerService.loadParticles(this.content.section);
 
-    setTimeout(() => {
-      if (this.containerService.isAnimating) {
-        this.containerService.morphEffect("modelJump",true);
-        this.containerService.morphEffect("modelBubbleHueShift",false);
-        this.containerService.morphEffect("modelPulseBlue",true);
+            setTimeout(() => {
+              if (this.containerService.isAnimating) {
+                this.containerService.morphEffect("modelJump", true);
+                this.containerService.morphEffect("modelBubbleHueShift", false);
+                this.containerService.morphEffect("modelPulseBlue", true);
+                this.containerService.morphEffect("modelSway", true);
+                this.containerService.animate();
+              }
+            }, 500);
+          } else {
+            // Section out of view - pause animation
+            this.containerService.disposeParticles();
+          }
+        }
+      },
+      { threshold: 0.4 } // Adjust based on how much needs to be visible
+    );
 
-         this.containerService.morphEffect("modelSway",true);
-        this.containerService.animate();
-      }
-    }, 500);
+    this.observer.observe(this.containerCanvasRef.nativeElement);
   }
+  ngOnDestroy(): void {
+    if (this.observer && this.containerCanvasRef) {
+      this.observer.unobserve(this.containerCanvasRef.nativeElement);
+    }
+    this.containerService.disposeParticles(); // Just in case
+  }
+
 }

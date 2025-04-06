@@ -30,7 +30,9 @@ export class ParticlesScatterService {
     );
     this.camera.position.z = 6;
     this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    const width = Math.max(1, window.innerWidth);
+    const height = Math.max(1, window.innerHeight);
+    this.renderer.setSize(width, height);
 
     this.createParticles("texture/cross_64.webp").then(() => this.animate()); // Ensure particles are created before animation
 
@@ -151,19 +153,28 @@ export class ParticlesScatterService {
     if (this.renderer && this.camera) {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-    }
+      const width = Math.max(1, window.innerWidth);
+      const height = Math.max(1, window.innerHeight);
+      this.renderer.setSize(width, height);
+          }
   }
   resizeRenderer(): void {
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    const width = Math.max(1, window.innerWidth);
+    const height = Math.max(1, window.innerHeight);
+    this.renderer.setSize(width, height);
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
   }
 
   private animate = () => {
+    if (!this.particles || !this.renderer || !this.camera || !this.scene) return;
+
+// DOM check (optional but helpful):
+if (!this.renderer.domElement || !document.body.contains(this.renderer.domElement)) return;
+
 
     requestAnimationFrame(this.animate);
-    if (!this.particles) return; 
+    if (!this.particles) return;
 
     const positions = this.particleGeometry.attributes["position"].array;
     const opacityArray = this.particleGeometry.attributes["alpha"].array;

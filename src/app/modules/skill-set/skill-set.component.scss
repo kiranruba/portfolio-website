@@ -75,7 +75,7 @@ p.box-text {
   margin: 0 auto;
   line-height: 1.6;
 }
-@media (max-width: 768px) {
+@media (max-width: 768px)  and (orientation: portrait) {
   .section {
     margin-top: 10vh;
   }
@@ -86,7 +86,9 @@ p.box-text {
     width: 90vw !important;
     height: 30vh !important;
   }
-
+p.box-text{
+  font-size: 1.2rem;
+}
   .carousel-copy {
     max-width: 100%;
     font-size: 1.2rem;
@@ -113,6 +115,6 @@ p.box-text {
     width: 60vw !important;
     height: 50vh !important;
     margin-top: -5rem;
-    left: 15vw;
+    align-self: center;
   }
 }

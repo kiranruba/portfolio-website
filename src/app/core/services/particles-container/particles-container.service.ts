@@ -44,7 +44,9 @@ export class ParticlesContainerService {
     if (this.renderer && this.camera) {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      const width = Math.max(1, window.innerWidth);
+      const height = Math.max(1, window.innerHeight);
+      this.renderer.setSize(width, height);
     }
   }
   //Initialise THREE.js system
@@ -57,7 +59,9 @@ export class ParticlesContainerService {
       1000
     );
     this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    const width = Math.max(1, window.innerWidth);
+    const height = Math.max(1, window.innerHeight);
+    this.renderer.setSize(width, height);
   }
   /** Fetch and store particles for a given section */
   loadParticles(section: string): void {
@@ -174,12 +178,12 @@ export class ParticlesContainerService {
 
   animate() {
     requestAnimationFrame(() => this.animate());
-    if (!this.particles) return; 
+    if (!this.particles) return;
     const positions = this.particles.geometry.attributes["position"]
       .array as Float32Array;
 
     for (let i = 0; i < this.particleTargetPositions.length; i++) {
-      positions[i] += (this.particleTargetPositions[i] - positions[i]) * 0.1;
+      positions[i] += (this.particleTargetPositions[i] - positions[i]) * 0.15;
     }
     this;
     this.particles.geometry.attributes["position"].needsUpdate = true;
@@ -218,7 +222,9 @@ export class ParticlesContainerService {
     this.adjustCameraView();
   }
   resizeRenderer(): void {
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    const width = Math.max(1, window.innerWidth);
+    const height = Math.max(1, window.innerHeight);
+    this.renderer.setSize(width, height);
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
   }
@@ -251,6 +257,7 @@ export class ParticlesContainerService {
   }
 
   disposeParticles() {
+      if (!this.particles) return;
     this.particles.geometry.dispose();
     if (Array.isArray(this.particles.material)) {
       this.particles.material.forEach((mat) => mat.dispose());
