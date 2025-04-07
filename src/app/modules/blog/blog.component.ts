@@ -50,7 +50,6 @@ export class BlogComponent implements OnInit, OnDestroy,AfterViewInit {
 
   ngOnInit(): void {
     this.disableParticles = this.isLowEndGPU();
-
     this.blogService.getPosts().subscribe(
       data => {
         this.posts = data;
@@ -95,13 +94,13 @@ export class BlogComponent implements OnInit, OnDestroy,AfterViewInit {
         const isVisible = entries[0].isIntersecting;
 
         isVisible && this.isPlaying ? this.startAutoSlide() : this.stopAutoSlide();
-         if (this.disableParticles) {
-           if (isVisible) {
-                    document.documentElement.classList.add('no-background-canvas'); // Blog is in view → remove particles
-                  } else {
-                    document.documentElement.classList.remove('no-background-canvas'); // Blog out of view → restore particles
-                  }
-         }
+        if (this.disableParticles) {
+          if (isVisible) {
+                   document.documentElement.classList.add('no-background-canvas'); // Blog is in view → remove particles
+                 } else {
+                   document.documentElement.classList.remove('no-background-canvas'); // Blog out of view → restore particles
+                 }
+        }
       },
       { threshold: 0.1 }
     );
@@ -258,7 +257,24 @@ openModal(post: Post): void {
           this.startAutoSlide();
       }
   }
+  isLowEndGPU(): boolean {
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") as WebGLRenderingContext | null
+              || canvas.getContext("experimental-webgl") as WebGLRenderingContext | null;
 
+      if (!gl) return true;
+
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      if (!debugInfo) return false;
+
+      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)?.toLowerCase();
+      const lowEndKeywords = ["mali", "adreno 3", "powervr", "intel hd", "apple a7", "apple a8"];
+      return lowEndKeywords.some(keyword => renderer.includes(keyword));
+    } catch {
+      return true;
+    }
+  }
 
 
   handleBrowserBack = (): void => {
@@ -266,25 +282,6 @@ openModal(post: Post): void {
      this.closeModal();
    }
  };
- isLowEndGPU(): boolean {
-   try {
-     const canvas = document.createElement("canvas");
-     const gl = canvas.getContext("webgl") as WebGLRenderingContext | null
-             || canvas.getContext("experimental-webgl") as WebGLRenderingContext | null;
-
-     if (!gl) return true;
-
-     const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-     if (!debugInfo) return false;
-
-     const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)?.toLowerCase();
-     const lowEndKeywords = ["mali", "adreno 3", "powervr", "intel hd", "apple a7", "apple a8"];
-     return lowEndKeywords.some(keyword => renderer.includes(keyword));
-   } catch {
-     return true;
-   }
- }
-
 
   ngOnDestroy(): void {
     this.stopAutoSlide();

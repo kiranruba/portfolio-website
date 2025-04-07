@@ -18,15 +18,15 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
 
   isModalOpen = false;
   isClosing = false;
-  disableParticles = false;
   private retryCount = 0;
-  private maxRetries =4;
+  private maxRetries =10;
   constructor(private containerService: ParticlesContainerService) {}
 
   ngAfterViewInit(): void {
 
     setTimeout(() => {
         this.isModalOpen = true;
+        this.particlesAnimate();
      });
   }
   ngOnDestroy(): void {
