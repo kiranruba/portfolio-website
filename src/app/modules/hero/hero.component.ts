@@ -32,6 +32,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.loadSignatureSVG();
     this.animateTextReveal();
     this.initializeServices();
+    this.alignParticlesContainer();
     const observer = new IntersectionObserver(
       (entries) => {
         const isHeroVisible = entries[0].isIntersecting;
@@ -54,7 +55,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.resizeTimeout = setTimeout(() => {
       this.adjustCanvasSize();
       this.adjustTextScaling();
-    }, 200); // Adding a slight delay to optimize performance
+      }, 200); // Adding a slight delay to optimize performance
   }
 
   private adjustCanvasSize(): void {
@@ -152,6 +153,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
             duration: 2,
             delay: 1, // Delayed glow for better pacing
           });
+          this.alignParticlesContainer();
         }, 200);
       });
   }
@@ -197,6 +199,30 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       }
     }, interval);
   }
+  private alignParticlesContainer(): void {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
+
+    const signature = this.el.nativeElement.querySelector('#signature-container');
+    const particles = this.containerCanvasRef?.nativeElement;
+    const svg = this.el.nativeElement.querySelector('#signature-container svg');
+    const svgRect = svg.getBoundingClientRect();
+    const svgWidth = svgRect.width;
+
+    if (signature && particles) {
+      const signatureRect = signature.getBoundingClientRect();
+
+      // Position the particle container at the end of the signature
+      const left =(svgWidth-signatureRect.left )
+// signatureRect.width;signatureRect.left
+      particles.style.position = 'absolute';
+      particles.style.left = `${left}px`;
+      console.log(left,signatureRect.left ,signatureRect.width,svgWidth)
+      // particles.style.top = `${signatureRect.top}px`; // Optional: align vertically to signature top
+    }
+  }
+
+
 
   ngOnDestroy(): void {
     this.containerService.disposeParticles();
