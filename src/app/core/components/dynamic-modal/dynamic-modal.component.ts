@@ -29,7 +29,7 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
         this.isModalOpen = true;
      });
 
-     this.disableParticles = this.isLowEndGPU();
+     // this.disableParticles = this.isLowEndGPU();
 
    if (!this.disableParticles) {
      this.particlesAnimate();
