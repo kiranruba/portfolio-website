@@ -65,7 +65,13 @@ html.no-scroll {
   nav.collapsible-menu {
     visibility: hidden;
   }
-  canvas{
+  canvas.particles-scatter{
+    visibility: hidden;
+  }
+}
+html.no-background-canvas {
+
+  canvas.particles-scatter{
     visibility: hidden;
   }
 }

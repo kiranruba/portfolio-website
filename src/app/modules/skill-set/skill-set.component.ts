@@ -17,7 +17,7 @@ export class SkillSetComponent implements OnInit, AfterViewInit {
   containerCanvasRef!: ElementRef;
   private transitionDuration = 3000;
   private retryCount = 0;
-  private readonly maxRetries = 10;
+  private readonly maxRetries = 20;
   private readonly retryDelay = 500;
   carouselItems: any[] = [];
   scrimOpacity = 0;

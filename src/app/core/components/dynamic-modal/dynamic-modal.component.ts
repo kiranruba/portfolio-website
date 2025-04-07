@@ -28,12 +28,6 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
     setTimeout(() => {
         this.isModalOpen = true;
      });
-
-     // this.disableParticles = this.isLowEndGPU();
-
-   if (!this.disableParticles) {
-     this.particlesAnimate();
-   }
   }
   ngOnDestroy(): void {
   this.containerService.destroy();
@@ -63,24 +57,6 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
       this.isClosing = false;
       this.close.emit();
     }, 1100);
-  }
-  isLowEndGPU(): boolean {
-    try {
-      const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl") as WebGLRenderingContext | null
-              || canvas.getContext("experimental-webgl") as WebGLRenderingContext | null;
-
-      if (!gl) return true;
-
-      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-      if (!debugInfo) return false;
-
-      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)?.toLowerCase();
-      const lowEndKeywords = ["mali", "adreno 3", "powervr", "intel hd", "apple a7", "apple a8"];
-      return lowEndKeywords.some(keyword => renderer.includes(keyword));
-    } catch {
-      return true;
-    }
   }
 
 
