@@ -99,7 +99,7 @@ export class BlogComponent implements OnInit, OnDestroy,AfterViewInit {
            if (isVisible) {
                     document.documentElement.classList.add('no-background-canvas'); // Blog is in view → remove particles
                   } else {
-                    document.documentElement.classList.remove('no-background-canvas'); // Blog out of view → restore particles
+                    // document.documentElement.classList.remove('no-background-canvas'); // Blog out of view → restore particles
                   }
          }
       },

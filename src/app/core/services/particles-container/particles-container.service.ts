@@ -185,9 +185,13 @@ export class ParticlesContainerService {
     const positions = this.particles.geometry.attributes["position"]
       .array as Float32Array;
 
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const lerpFactor = isMobile ? 0.25 : 0.15;
+
     for (let i = 0; i < this.particleTargetPositions.length; i++) {
-      positions[i] += (this.particleTargetPositions[i] - positions[i]) * 0.15;
+      positions[i] += (this.particleTargetPositions[i] - positions[i]) * lerpFactor;
     }
+
     this;
     this.particles.geometry.attributes["position"].needsUpdate = true;
     this.morphParticles();
