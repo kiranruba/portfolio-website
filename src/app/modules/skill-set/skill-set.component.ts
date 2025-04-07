@@ -108,37 +108,47 @@ export class SkillSetComponent implements OnInit, AfterViewInit {
     }
   }
   private initializeCanvasAndParticles(): void {
-  if (!this.containerCanvasRef?.nativeElement) {
-    if (this.retryCount < this.maxRetries) {
-      this.retryCount++;
-      setTimeout(() => this.initializeCanvasAndParticles(), this.retryDelay);
-    } else {
+    const canvas = this.containerCanvasRef?.nativeElement;
+
+    // If canvas not ready, retry later
+    if (!canvas) {
+      if (this.retryCount < this.maxRetries) {
+        this.retryCount++;
+        setTimeout(() => this.initializeCanvasAndParticles(), this.retryDelay);
+      }
+      return;
     }
-    return;
-  }
 
-  this.retryCount = 0;
+    this.retryCount = 0; // reset on success
 
-  this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-  this.containerService.loadParticles("box");
+    this.containerService.initThreeJS(canvas);
+    this.containerService.loadParticles("box");
 
-  if (this.containerService.isAnimating) {
-    this.containerService.animate();
-  }
+    // Initial animation check
+    const ensureAnimation = () => {
+      if (!this.containerService.isAnimating) {
+        // Retry full init if still not animating
+        if (this.retryCount < this.maxRetries) {
+          this.retryCount++;
+          setTimeout(() => this.initializeCanvasAndParticles(), this.retryDelay);
+        }
+        return;
+      }
 
-  setTimeout(() => {
-    if (this.containerService.isAnimating) {
       this.containerService.animate();
-    }
-  }, 500);
 
-  // Schedule repeated morph transitions
-  setTimeout(() => {
-    setInterval(() => {
-      this.containerService.setTarget();
-    }, this.transitionDuration);
-  }, this.transitionDuration);
-}
+      // Morph loop setup
+      setInterval(() => {
+        this.containerService.setTarget();
+      }, this.transitionDuration);
+    };
+
+    // Delay before checking if animation has kicked in
+    setTimeout(() => {
+      ensureAnimation();
+    }, 1000);
+  }
+
 
   private checkVisibility(): void {
     const section = document.getElementById("box-out-section");

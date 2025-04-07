@@ -83,30 +83,40 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   private initializeServices(): void {
-  if (!this.containerCanvasRef?.nativeElement || !this.scatterCanvasRef?.nativeElement) {
-    if (this.retryCount < this.maxRetries) {
-      this.retryCount++;
-      setTimeout(() => this.initializeServices(), this.retryDelay);
-    } else {
+    const canvasReady =
+      this.containerCanvasRef?.nativeElement && this.scatterCanvasRef?.nativeElement;
+
+    if (!canvasReady) {
+      if (this.retryCount < this.maxRetries) {
+        this.retryCount++;
+        setTimeout(() => this.initializeServices(), this.retryDelay);
+      }
+      return;
     }
-    return;
+
+    // Reset retry count when canvas is ready
+    this.retryCount = 0;
+
+    // Init both services
+    this.scatterService.initThreeJS(this.scatterCanvasRef.nativeElement);
+    this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
+    this.containerService.loadParticles("home");
+
+    // Delay to check if animation started
+    setTimeout(() => {
+      if (!this.containerService.isAnimating) {
+        if (this.retryCount < this.maxRetries) {
+          this.retryCount++;
+          this.initializeServices(); // Retry everything again
+        }
+        return;
+      }
+
+      // Success: trigger animation
+      this.containerService.animate();
+    }, 1500);
   }
 
-  // Reset retry count once successful
-  this.retryCount = 0;
-
-  // Proceed with initialization
-  this.scatterService.initThreeJS(this.scatterCanvasRef.nativeElement);
-  this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-  this.containerService.loadParticles("home");
-
-  // Kick off animation with a delay
-  setTimeout(() => {
-    if (this.containerService.isAnimating) {
-      this.containerService.animate();
-    }
-  }, 1500);
-}
   private loadSignatureSVG(): void {
     fetch("branding/sign.svg")
       .then((response) => response.text())

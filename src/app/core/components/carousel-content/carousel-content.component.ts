@@ -27,53 +27,49 @@ export class CarouselContentComponent implements AfterViewInit ,OnDestroy{
   ) {}
 
   ngAfterViewInit(): void {
-  const waitForCanvas = () => {
-    if (!this.containerCanvasRef?.nativeElement) {
-      requestAnimationFrame(waitForCanvas); // Keep retrying until defined
-      return;
-    }
-    this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-    this.containerService.loadParticles(this.content.section);
+    const maxRetries = 10;
+    let retryCount = 0;
 
-    setTimeout(() => {
-      if (this.containerService.isAnimating) {
+    const initialize = () => {
+      const canvas = this.containerCanvasRef?.nativeElement;
+
+      if (!canvas) {
+        requestAnimationFrame(waitForCanvas);
+        return;
+      }
+
+      this.containerService.initThreeJS(canvas);
+      this.containerService.loadParticles(this.content.section);
+
+      setTimeout(() => {
+        if (!this.containerService.isAnimating) {
+          if (retryCount < maxRetries) {
+            retryCount++;
+            initialize(); // Retry full init
+          }
+          return;
+        }
+
+        // Success: morph and animate
         this.containerService.morphEffect("modelJump", true);
         this.containerService.morphEffect("modelBubbleHueShift", false);
         this.containerService.morphEffect("modelPulseBlue", true);
         this.containerService.morphEffect("modelSway", true);
         this.containerService.animate();
+      }, 1000);
+    };
+
+    const waitForCanvas = () => {
+      if (!this.containerCanvasRef?.nativeElement) {
+        requestAnimationFrame(waitForCanvas);
+      } else {
+        initialize(); // Canvas is ready → start init loop
       }
-    }, 500);
-    // Canvas is now defined, set up the observer
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        for (let entry of entries) {
-          if (entry.isIntersecting ) {
-            this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-            this.containerService.loadParticles(this.content.section);
+    };
 
-            setTimeout(() => {
-              if (this.containerService.isAnimating) {
-                this.containerService.morphEffect("modelJump", true);
-                this.containerService.morphEffect("modelBubbleHueShift", false);
-                this.containerService.morphEffect("modelPulseBlue", true);
-                this.containerService.morphEffect("modelSway", true);
-                this.containerService.animate();
-              }
-            }, 500);
-          } else {
-            this.containerService.disposeParticles();
-          }
-        }
-      },
-      { threshold: 0.4 }
-    );
+    waitForCanvas();
+  }
 
-    this.observer.observe(this.containerCanvasRef.nativeElement);
-  };
-
-  waitForCanvas(); // Start the loop
-}
 
   ngOnDestroy(): void {
     if (this.observer && this.containerCanvasRef) {

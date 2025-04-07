@@ -107,7 +107,12 @@ export class ParticlesContainerService {
 
     // Start loading the first model
     const targetVertices = this.allModelVertices[this.currentTargetIndex];
-    const particleCount = Math.min(this.maxParticles, targetVertices.length);
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const maxParticles = isMobile ? 10000 : this.maxParticles;
+
+    const particleCount = Math.min(maxParticles, targetVertices.length);
+
+    // const particleCount = Math.min(this.maxParticles, targetVertices.length);
     this.particlePositions = new Float32Array(particleCount * 3);
     this.particleTargetPositions = new Float32Array(particleCount * 3);
     this.particleColors = new Float32Array(this.maxParticles * 3);
@@ -186,7 +191,7 @@ export class ParticlesContainerService {
       .array as Float32Array;
 
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    const lerpFactor = isMobile ? 0.25 : 0.15;
+    const lerpFactor = isMobile ? 0.3 : 0.15;
 
     for (let i = 0; i < this.particleTargetPositions.length; i++) {
       positions[i] += (this.particleTargetPositions[i] - positions[i]) * lerpFactor;
@@ -199,7 +204,9 @@ export class ParticlesContainerService {
     if (this.modelPosition?.[this.currentTargetIndex]?.no_rotation_flag) {
       this.particles.rotation.y += 0;
     } else {
-      this.particles.rotation.y += 0.015;
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      const rotateSpeed = isMobile ? 0.03 : 0.015;
+      this.particles.rotation.y += rotateSpeed;
     }
 
     this.particles.position.x = this.camera.position.x * 0.25;

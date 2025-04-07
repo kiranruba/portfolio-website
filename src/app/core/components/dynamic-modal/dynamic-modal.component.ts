@@ -33,20 +33,28 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
   ngOnDestroy(): void {
   this.containerService.destroy();
 }
-  particlesAnimate(): void {
-    if (this.containerCanvasRef?.nativeElement) {
-      this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
-      this.containerService.loadParticles(this.modal_data.section);
+particlesAnimate(): void {
+  const canvas = this.containerCanvasRef?.nativeElement;
 
-      setTimeout(() => {
+  if (canvas) {
+    this.containerService.initThreeJS(canvas);
+    this.containerService.loadParticles(this.modal_data.section);
+
+    setTimeout(() => {
+      if (this.containerService.isAnimating) {
         this.containerService.animate();
-      }, 500);
-    } else if (this.retryCount < this.maxRetries) {
-      this.retryCount++;
-      setTimeout(() => this.particlesAnimate(), 500);
-    } else {
-    }
+        this.retryCount = 0; // success
+      } else if (this.retryCount < this.maxRetries) {
+        this.retryCount++;
+        this.particlesAnimate(); // Retry if animation didn’t start
+      }
+    }, 500);
+  } else if (this.retryCount < this.maxRetries) {
+    this.retryCount++;
+    setTimeout(() => this.particlesAnimate(), 500); // Retry if canvas not ready
   }
+}
+
 
 
   closeModal(): void {

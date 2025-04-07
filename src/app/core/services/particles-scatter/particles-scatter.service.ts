@@ -52,6 +52,9 @@ export class ParticlesScatterService {
       textureLoader.load(texturePath, (texture) => {
 
         this.particleGeometry = new THREE.BufferGeometry();
+        const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+        const maxParticles = isMobile ? 600 : this.particleCount;
+        const particleCount =maxParticles;
         const positions = new Float32Array(this.particleCount * 3);
         const opacityArray = new Float32Array(this.particleCount);
 
