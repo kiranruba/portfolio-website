@@ -48,7 +48,7 @@ export class CarouselContentComponent implements AfterViewInit ,OnDestroy{
     this.observer = new IntersectionObserver(
       (entries) => {
         for (let entry of entries) {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting ) {
             this.containerService.initThreeJS(this.containerCanvasRef.nativeElement);
             this.containerService.loadParticles(this.content.section);
 

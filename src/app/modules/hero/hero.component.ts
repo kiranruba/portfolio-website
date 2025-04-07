@@ -43,7 +43,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     );
     observer.observe(this.el.nativeElement);
 
-    
+
   }
   @HostListener("window:resize")
   onResize(): void {
@@ -163,7 +163,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       filter: "blur(0px)", // Clear text as it animates in
       duration: 2.5,
       ease: "cubic-bezier(0.25, 1, 0.5, 1)",
-      delay: 1.5,
+      delay: 2,
     });
   }
 

@@ -27,6 +27,7 @@ export class DynamicModalComponent implements AfterViewInit ,OnDestroy{
 
     setTimeout(() => {
         this.isModalOpen = true;
+        this.particlesAnimate();
      });
   }
   ngOnDestroy(): void {
