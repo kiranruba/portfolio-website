@@ -217,7 +217,6 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 // signatureRect.width;signatureRect.left
       particles.style.position = 'absolute';
       particles.style.left = `${left}px`;
-      console.log(left,signatureRect.left ,signatureRect.width,svgWidth)
       // particles.style.top = `${signatureRect.top}px`; // Optional: align vertically to signature top
     }
   }
