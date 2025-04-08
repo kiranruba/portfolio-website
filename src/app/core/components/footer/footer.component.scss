@@ -31,7 +31,7 @@
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 70%;
     align-items: center;
     font-size: 1rem;
     color: #48525e;
@@ -171,6 +171,8 @@ button.mail-id.tooltip {
   .footer {
     padding-left: 5%;
     padding-right: 5%;
+    &__credits {
+          width: 90%;}
   }
 }
 
@@ -187,6 +189,7 @@ button.mail-id.tooltip {
     h3 {
       font-size: 1.25rem;
     }
+
   }
   img.world {
     height: 8rem;

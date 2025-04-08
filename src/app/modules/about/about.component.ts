@@ -45,7 +45,7 @@ export class AboutComponent implements AfterViewInit {
     // Calculate progress for text reveal
     const progress = Math.min(
       Math.max(
-        (scrollTop - sectionTop + windowHeight) / sectionHeight / 2,
+        (scrollTop - sectionTop + windowHeight) / sectionHeight / 2.1,
         0
       ),
       1

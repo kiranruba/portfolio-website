@@ -79,11 +79,13 @@ inset: 0;
   top: 90vh;
   height: 20%;
   width: 100%;
+  display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .close {
   position: absolute;
-  justify-self: anchor-center;
   border-radius: 50%;
   padding: 0.8rem;
   z-index: 100;
@@ -425,7 +427,6 @@ span.tech_name {
   font-style: oblique;
   flex-direction: column;
   color: $text-special;
-  padding-bottom: 4rem;
   .img-sign {
     display: flex;
     flex-direction: row;
