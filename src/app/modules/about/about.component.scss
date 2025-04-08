@@ -24,7 +24,7 @@ section {
   position: relative;
 }
 .image-container {
-  padding-top: 15%;
+  padding-top: 20vh;
   padding-left: 12vw;
   justify-content: center;
   align-items: center;
@@ -125,7 +125,7 @@ span {
     position: relative;
   }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1200px) and (orientation: portrait){
   .gradient-layer {
     position: relative;
   }
@@ -137,6 +137,10 @@ span {
     padding-left: 0;
     width: 100vw;
     text-align: center;
+  }
+  .scrollsection {
+    padding: 12vw;
+    padding-top: 8vh;
   }
 }
 @media (orientation: portrait) {

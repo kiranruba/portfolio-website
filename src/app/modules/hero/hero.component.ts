@@ -68,7 +68,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
       scatterElement.width = window.innerWidth;
       scatterElement.height = window.innerHeight;
-
+      const isMobile = window.innerWidth < 768;
+      if (!isMobile)
       this.containerService.resizeRenderer();
       this.scatterService.resizeRenderer();
     }
@@ -201,7 +202,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
   private alignParticlesContainer(): void {
     const isMobile = window.innerWidth < 768;
-    if (isMobile) return;
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    if (isMobile || isPortrait) return;
 
     const signature = this.el.nativeElement.querySelector('#signature-container');
     const particles = this.containerCanvasRef?.nativeElement;

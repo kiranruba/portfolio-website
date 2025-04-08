@@ -105,13 +105,7 @@ div#signature-container {
   }
 }
 
-@media (max-width: 768px) {
 
-
-  // .hero-content {
-  //   height: 80%;
-  // }
-}
 @media (min-width: 768px) and (max-width: 1200px) and (max-aspect-ratio: 1/1) and (orientation: portrait) {
   .tagline {
     margin-top: -1rem;
@@ -147,6 +141,9 @@ div#signature-container {
 }
 
 @media (max-width: 1200px) {
+  div#signature-container {
+    width: 100%;
+}
   .particles-container {
     top: 18vh;
     left: 35vw;
@@ -155,6 +152,9 @@ div#signature-container {
   }
 }
 @media (orientation: portrait) {
+  div#signature-container {
+    width: 100%;
+}
   /* Styles for taller-than-wide screens */
   .particles-container {
     top: 40vh;
