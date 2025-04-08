@@ -37,8 +37,7 @@ section {
   font-size: 2rem;
   margin-bottom: 10vh;
   line-height: 1.6;
-  padding: 10vw;
-  padding-top: 20vh;
+  padding: 20vh 0 5vw 5vw;
   opacity: 0;
   animation: fadeInDiv 2s ease-in-out 2.5s forwards;
 }
@@ -145,6 +144,6 @@ span {
 }
 @media (orientation: portrait) {
   .scrollsection {
-    padding-top: 8vh;
+    padding-top: 3vh;
   }
 }
