@@ -1,5 +1,5 @@
 
-//styling for carousal section
+//styling for carousel section
 * {
   box-sizing: border-box;
 }
@@ -16,7 +16,7 @@
   z-index: 10;
 }
 
-//styling for carousal
+//styling for carousel
 
 .carousel {
   position: relative;
@@ -59,7 +59,7 @@
   }
 }
 
-//styling for carousal content
+//styling for carousel content
 
 .post-card {
   padding: 2rem;
@@ -67,6 +67,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .tag {
   padding-bottom: 1.2rem;
@@ -98,7 +99,7 @@ h3 {
   }
 }
 
-//styling for carousal Controls
+//styling for carousel Controls
 .carousel-controls {
   display: flex;
   align-items: center;
@@ -257,6 +258,11 @@ h3 {
     padding: 1rem;
     display: flex;
     align-items: center;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) and (max-aspect-ratio: 1/1) and (orientation: portrait) {
+  .carousel{
+    min-height: 60vh;
   }
 }
 @mixin hover-effect($button-class) {

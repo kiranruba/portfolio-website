@@ -220,8 +220,39 @@
       }
     }
   }
+}
+@media (min-width: 768px) and (max-width: 1200px) and (max-aspect-ratio: 1/1) and (orientation: portrait) {
+  .collapsible-menu{
+    font-size: 1.25rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    .menu-trigger{
+      width: 3.5rem;
+      height: 3.5rem;
+      .bar{
+        width: 1.75rem;
+      }
+    }
+    .toggle-header{
+      padding: 1.5rem;
+      box-sizing: border-box;
+    img{
+      width: 2.5rem;
+    }}
+  .menu-content  .close{
+      padding: 1rem;
+      img{
+        width: 1.25rem;
+    height: 1.25rem;
+    display: flex
+;
+    align-self: center;
+    }}
+    .menu-content.active{
 
-  @media (min-width: 769px) {
-    display: none;
+        padding: 1.5rem;
+        box-sizing: border-box;
+    }
   }
+
 }

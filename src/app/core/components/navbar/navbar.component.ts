@@ -14,6 +14,8 @@ export class NavbarComponent implements OnInit {
   isNavbarVisible = true;
   isMenuOpen = false;
   isMobile: boolean = false;
+  isnotTablet: boolean = false;
+
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
     if (this.isMenuOpen && this.isMobile) {
@@ -25,14 +27,21 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.breakpointObserver
-      .observe([Breakpoints.Handset])
+      .observe(['(max-width: 1199px)'])
       .subscribe((result) => {
         this.isMobile = result.matches;
       });
+      this.breakpointObserver
+   .observe(['(max-width: 768px)'])
+   .subscribe((result) => {
+     this.isnotTablet = result.matches;
+   });
+
     setTimeout(() => {
       this.checkActiveSection();
     }, 1000);
   }
+
 
   @HostListener("window:scroll", [])
   onScroll(): void {

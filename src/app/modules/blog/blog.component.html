@@ -1,4 +1,4 @@
-<!-- carousal of blog posts -->
+<!-- carousel of blog posts -->
 <div class="section">
   <div class="carousel" #slideshow>
     <!-- Carousel Cards -->
@@ -11,7 +11,7 @@
           'opacity': Math.abs(active - i) >= maxVisibility ? '0' : '1',
           'display': Math.abs(active - i) > maxVisibility ? 'none' : 'block'
         }">
-      <div class="post-card">
+      <div class="post-card" (click)="openModal(post)">
         <h3>{{ post.title }}</h3>
         <div class="tag">
           {{post.tag}}

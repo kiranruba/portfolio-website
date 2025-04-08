@@ -75,7 +75,7 @@ p.box-text {
   margin: 0 auto;
   line-height: 1.6;
 }
-@media (max-width: 768px)  and (orientation: portrait) {
+@media (max-width: 768px)  , (orientation: portrait) {
   .section {
     margin-top: 10vh;
   }

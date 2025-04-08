@@ -18,6 +18,9 @@
     <div class="logo">
       <img src="/branding/logo.svg" alt="KR">
     </div>
+    <div class="available-for-hire" *ngIf="!isnotTablet">
+      <span class="bulb"></span> Available for Hire
+    </div>
     <button class="menu-trigger" (click)="toggleMenu()">
       <span class="bar"></span>
       <span class="bar"></span>
