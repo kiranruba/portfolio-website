@@ -74,7 +74,7 @@ inset: 0;
   box-sizing: border-box;
 }
 .close-container {
-  position: sticky;
+  position: fixed;
   z-index: 20000;
   top: 85vh;
   height: 20%;
