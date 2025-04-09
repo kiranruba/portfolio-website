@@ -41,6 +41,13 @@ export class ProjectsComponent implements OnInit {
 
     document.documentElement.classList.add("no-scroll");
     window.addEventListener("popstate", this.handleBrowserBack);
+    //  Reset scroll to top of modal content wrapper
+  setTimeout(() => {
+    const wrapper = document.querySelector('.modal-content-wrapper');
+    if (wrapper) {
+      wrapper.scrollTop = 0;
+    }
+  }, 0);
   }
   @HostListener("document:keydown.escape", ["$event"])
   handleEscapeKey(event: KeyboardEvent) {

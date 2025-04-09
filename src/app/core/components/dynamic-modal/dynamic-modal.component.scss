@@ -359,6 +359,7 @@ span.tech_name {
   align-items: center;
   justify-content: center;
   gap: 30px;
+  box-sizing: border-box;
 }
 
 .infographic-step {
@@ -533,5 +534,10 @@ p {
   .feature-card{
     padding: 1.5rem;
     width: 45rem;
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+
   }
 }
