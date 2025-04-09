@@ -76,8 +76,8 @@ inset: 0;
 .close-container {
   position: sticky;
   z-index: 20000;
-  top: 96%;
-  height: 8%;
+  top: 97%;
+  height: 5%;
   padding-bottom: 3rem;
   width: 100%;
   display: flex;
@@ -444,7 +444,12 @@ span.tech_name {
     width: 8rem;
   }
 }
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) , (orientation: portrait) {
+  .close-container{
+    top: 95%;
+    height: 10%;
+    padding-bottom: 5rem;
+  }
   .paraimg-container {
     flex-direction: column-reverse;
 
