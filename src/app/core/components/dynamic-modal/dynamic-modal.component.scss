@@ -76,8 +76,8 @@ inset: 0;
 .close-container {
   position: fixed;
   z-index: 20000;
-  top: 85vh;
-  height: 20%;
+  bottom: 2rem;
+  // height: 20%;
   width: 100%;
   display: flex;
     justify-content: center;
